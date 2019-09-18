@@ -9,9 +9,13 @@ import com.minimarket.model.User;
  */
 public interface UserService {
 
-public ReturnMsg selectUser(User user);
-public ReturnMsg login(User user);
-    public ReturnMsg register(User user);
-    public ReturnMsg accountUpdate(User user);
+    ReturnMsg selectUser(User user);
+
+    ReturnMsg login(User user);
+
+    ReturnMsg register(User user);
+
+    ReturnMsg accountUpdate(User user);
+
     ReturnMsg passwordUpdate(User user);
 }

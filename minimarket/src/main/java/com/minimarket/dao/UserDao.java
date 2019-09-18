@@ -9,8 +9,12 @@ import com.minimarket.model.User;
 public interface UserDao {
 
     User selectUser(User user);
+
     User login(User user);
+
     int register(User user);
+
     int accountUpdate(User user);
+
     int passwordUpdate(User user);
 }

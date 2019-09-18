@@ -9,5 +9,8 @@
         <module name="minimarket" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="minimarket" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

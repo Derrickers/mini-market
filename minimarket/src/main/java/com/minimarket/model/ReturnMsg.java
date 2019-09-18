@@ -1,5 +1,7 @@
 package com.minimarket.model;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * @author ronjod
  * @create 2019-09-17 14:54
@@ -21,11 +23,11 @@ public class ReturnMsg {
         this.msg = msg;
     }
 
-    public String getJsonMsg() {
+    public JSONObject getJsonMsg() {
         return jsonMsg;
     }
 
-    public void setJsonMsg(String jsonMsg) {
+    public void setJsonMsg(JSONObject jsonMsg) {
         this.jsonMsg = jsonMsg;
     }
 
@@ -40,7 +42,6 @@ public class ReturnMsg {
 
     private boolean state;
     private String msg;
-    private String jsonMsg;
-
+    private JSONObject jsonMsg;
 
 }

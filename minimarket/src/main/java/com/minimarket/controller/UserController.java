@@ -2,12 +2,10 @@ package com.minimarket.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.minimarket.model.ReturnMsg;
 import com.minimarket.model.User;
 import com.minimarket.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,16 +22,14 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    private static final Logger logger= LoggerFactory.getLogger(UserController.class);
+    //private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Resource
     private UserService userService;
 
-@RequestMapping(value = "/login", method = RequestMethod.POST)
-public void login(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
-    //request.setCharacterEncoding("UTF-8");
-    response.setCharacterEncoding("UTF-8");
-    JSONObject js=jsonbody;
-
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public void login(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        JSONObject js = jsonbody;
 //    logger.info("22222222222\n"+js.getString("ID")+"\n"
 //            +js.getString("Password")+"\n"
 //            +js.getString("NickName")+"\n"
@@ -47,79 +43,54 @@ public void login(@RequestBody JSONObject jsonbody, HttpServletResponse response
 //    +js.getString("Credit")+"\n"
 //    +js.getString("Photo")+"\n"
 //    );
+        User user = JSON.parseObject(js.toString(), User.class);
+        ReturnMsg returnMsg = this.userService.login(user);
+        ObjectMapper mapper = new ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(returnMsg));
+        response.getWriter().close();
+    }
 
-    User user = JSON.parseObject(js.toString(),User.class);
-
- //logger.info("1111111111"+user.toString());
-
-    ReturnMsg returnMsg = this.userService.login(user);
-    ObjectMapper mapper = new ObjectMapper();
-    response.getWriter().write(mapper.writeValueAsString(returnMsg));
-    response.getWriter().close();
-}
-@RequestMapping(value = "/selectUser", method = RequestMethod.POST)
-public void selectUser(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
-    //request.setCharacterEncoding("UTF-8");
-    response.setCharacterEncoding("UTF-8");
-JSONObject js=jsonbody;
-  //  System.out.println(js);
-
-    //long userId = Long.parseLong(request.getParameter("id"));
-    User user = JSON.parseObject(js.toString(),User.class);
-    ReturnMsg returnMsg = this.userService.selectUser(user);
-    ObjectMapper mapper = new ObjectMapper();
-    response.getWriter().write(mapper.writeValueAsString(returnMsg));
-    response.getWriter().close();
-}
+    @RequestMapping(value = "/selectUser", method = RequestMethod.POST)
+    public void selectUser(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        JSONObject js = jsonbody;
+        User user = JSON.parseObject(js.toString(), User.class);
+        ReturnMsg returnMsg = this.userService.selectUser(user);
+        ObjectMapper mapper = new ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(returnMsg));
+        response.getWriter().close();
+    }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void register(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
-        //request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        JSONObject js=jsonbody;
-        //  System.out.println(js);
-
-        logger.info(js.toString());
-        //long userId = Long.parseLong(request.getParameter("id"));
-        User user = JSON.parseObject(js.toString(),User.class);
-
-
+        JSONObject js = jsonbody;
+        User user = JSON.parseObject(js.toString(), User.class);
         ReturnMsg returnMsg = this.userService.register(user);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
         response.getWriter().close();
     }
+
     @RequestMapping(value = "/accountUpdate", method = RequestMethod.POST)
     public void accountUpdate(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
-        //request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        JSONObject js=jsonbody;
-        //  System.out.println(js);
-
-        logger.info(js.toString());
-        //long userId = Long.parseLong(request.getParameter("id"));
-        User user = JSON.parseObject(js.toString(),User.class);
-        //System.out.println(1111111);
-        logger.info("1111111111"+user.toString());
-
+        JSONObject js = jsonbody;
+        User user = JSON.parseObject(js.toString(), User.class);
         ReturnMsg returnMsg = this.userService.accountUpdate(user);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
         response.getWriter().close();
     }
+
     @RequestMapping(value = "/passwordUpdate", method = RequestMethod.POST)
     public void passwordUpdate(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
-        //request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        JSONObject js=jsonbody;
-        //  System.out.println(js);
-
-        logger.info(js.toString());
-        //long userId = Long.parseLong(request.getParameter("id"));
-        User user = JSON.parseObject(js.toString(),User.class);
+        JSONObject js = jsonbody;
+        //logger.info(js.toString());
+        User user = JSON.parseObject(js.toString(), User.class);
         ReturnMsg returnMsg = this.userService.passwordUpdate(user);
         ObjectMapper mapper = new ObjectMapper();
-
         response.getWriter().write(mapper.writeValueAsString(JSON.toJSONString(returnMsg)));
         response.getWriter().close();
     }
