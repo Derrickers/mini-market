@@ -12,10 +12,14 @@
                 document.getElementById("test").innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("POST", "user/login", true);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("id=1");
-        xmlhttp.send("password=123");
+        xmlhttp.open("POST", "user/selectUser", true);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send(JSON.stringify({
+            "ID": "1"
+            // ,
+            // "Password": "123",
+            // "nickName": "licheng"
+        }));
     }
 </script>
 <body>

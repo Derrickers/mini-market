@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.minimarket.model.ReturnMsg;
 import com.minimarket.model.User;
 import com.minimarket.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    //private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Resource
     private UserService userService;
 
@@ -54,6 +56,7 @@ public class UserController {
     public void selectUser(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
+        logger.info("1111111"+js);
         User user = JSON.parseObject(js.toString(), User.class);
         ReturnMsg returnMsg = this.userService.selectUser(user);
         ObjectMapper mapper = new ObjectMapper();

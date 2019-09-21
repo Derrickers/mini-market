@@ -20,13 +20,16 @@
         <result property="Credit" column="Credit"/>
         <result property="Photo" column="Photo"/>
     </resultMap>
+    <!--信息查找-->
     <select id="selectUser" resultMap="Userqq" parameterType="com.minimarket.model.User">
         SELECT ID,nickName,realName,IdentityNum,gender,Birthday,Address,Tel,Email,Credit,Photo FROM user_info WHERE id = #{ID}
     </select>
+    <!--登录-->
     <select id="login" resultMap="Userqq" parameterType="com.minimarket.model.User">
         SELECT * FROM user_info WHERE id = #{ID} AND password=#{Password}
     </select>
-    <insert id="register"  parameterType="com.minimarket.model.User">
+    <!--数据插入/注册-->
+    <insert id="register" parameterType="com.minimarket.model.User">
         INSERT INTO user_info set
  		id= #{ID},
  		password=#{Password},
@@ -35,28 +38,29 @@
    identityNum =#{IDnum},
    gender=#{Gender};
 </insert>
+    <!--信息修改-->
     <update id="accountUpdate" parameterType="com.minimarket.model.User">
         UPDATE user_info
         <trim prefix="set" suffixOverrides=",">
-        <if test="NickName!=null">
-            nickName=#{NickName},
-        </if>
-        <if test="Birthday!=null">
-            Birthday=#{Birthday},
-        </if>
-           <if test="Tel!=null">
-               Tel=#{Tel},
-        </if>
-           <if test="Email!=null">
-               Email=#{Email},
-        </if>
-           <if test="Photo!=null">
-               Photo=#{Photo},
-        </if>
+            <if test="NickName!=null">
+                nickName=#{NickName},
+            </if>
+            <if test="Birthday!=null">
+                Birthday=#{Birthday},
+            </if>
+            <if test="Tel!=null">
+                Tel=#{Tel},
+            </if>
+            <if test="Email!=null">
+                Email=#{Email},
+            </if>
+            <if test="Photo!=null">
+                Photo=#{Photo},
+            </if>
         </trim>
         WHERE id= #{ID}
     </update>
-
+    <!--密码修改-->
     <update id="passwordUpdate" parameterType="com.minimarket.model.User">
         UPDATE user_info
         SET password=#{Password}

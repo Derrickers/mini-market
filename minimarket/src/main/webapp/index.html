@@ -12,13 +12,13 @@
                 document.getElementById("test").innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("POST", "user/accountUpdate", true);
+        xmlhttp.open("POST", "user/selectUser", true);
         xmlhttp.setRequestHeader("Content-type", "application/json");
-
         xmlhttp.send(JSON.stringify({
-            "ID": "1",
-            "Password": "123",
-            "nickName": "licheng"
+            "ID": "1"
+            // ,
+            // "Password": "123",
+            // "nickName": "licheng"
         }));
     }
 </script>
