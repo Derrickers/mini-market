@@ -15,7 +15,7 @@ public class User {
     private String Address;
     private String Tel;
     private String Email;
-    private int Credit;
+    private double Credit;
     private String Photo;
 
     public String getID() {
@@ -78,7 +78,7 @@ public class User {
     public void setEmail(String email) {
         Email = email;
     }
-    public int getCredit() {
+    public double getCredit() {
         return Credit;
     }
     public void setCredit(int credit) {
