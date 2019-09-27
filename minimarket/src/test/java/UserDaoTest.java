@@ -34,12 +34,12 @@ public class UserDaoTest {
         User user1 = dao.selectUser(user);
         System.out.println(user1);
     }
-//注册
+    //注册
     @Test
     public void testHttpRegister() throws Exception{
         String url="http://localhost:8080/minimarket/user/register";
         JSONObject json=new JSONObject();
-        json.put("ID","3");
+        json.put("ID","5");
         json.put("password","12212");
         json.put("nickName","zzz");
         json.put("realName","rrr");
@@ -59,7 +59,7 @@ public class UserDaoTest {
     //查询
     @Test
     public void testHttpSelectUser() throws Exception{
-        String url="http://172.20.10.10:8080/minimarket/user/selectUser";
+        String url="http://localhost:8080/minimarket/user/selectUser";
         JSONObject json=new JSONObject();
         json.put("ID","1");
         //get 请求

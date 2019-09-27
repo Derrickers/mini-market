@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为UserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.minimarket.dao.MissionDao">
+    <!-- type：表示实体类的全限定类名  id：通过id其他标签可引用该标签-->
+    <resultMap type="com.minimarket.model.Mission" id="Mission">
+        <!-- id 标签映射主键字段 -->
+        <id property="ID" column="ID"/>
+        <!-- result 标签映射其他字段 -->
+        <result property="Name" column="Name"/>
+        <result property="Status" column="Status"/>
+        <result property="Tab" column="Tab"/>
+        <result property="Owner" column="Owner"/>
+        <result property="Level" column="Level"/>
+        <result property="Brief" column="Brief"/>
+        <result property="Quota" column="Quota"/>
+        <result property="accNum" column="AccNum"/>
+        <result property="SDate" column="SDate"/>
+        <result property="EDate" column="EDate"/>
+        <result property="Reward" column="Reward"/>
+        <result property="Credit" column="Credit"/>
+        <result property="Complete" column="Complete"/>
+    </resultMap>
+    <!--查询当前可以接取的全部任务-->
+    <select id="selectMissionListAll" resultMap="Mission" parameterType="com.minimarket.model.Mission">
+        select * from mission_info where Status="0";
+    </select>
+    <!--查询当前个人发布的全部任务-->
+    <select id="selectMissionListUpload" resultMap="Mission" parameterType="com.minimarket.model.Mission">
+        select * from mission_info where Owner=#{Owner};
+    </select>
+    <!--查询当前个人接取的全部任务-->
+    <select id="selectMissionListGet" resultMap="Mission" parameterType="com.minimarket.model.userMission">
+        select * from mission_info where ID in (select user_mission.ID from user_mission where Receiver =#{Receiver});
+</select>
+    <!--查询某个任务具体信息-->
+    <select id="accountUpdate" resultMap="Mission" parameterType="com.minimarket.model.Mission">
+        select * from mission_info where ID=#{ID};
+    </select>
+
+</mapper>
