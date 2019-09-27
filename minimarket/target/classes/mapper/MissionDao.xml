@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 设置为UserDao接口方法提供sql语句配置 -->
-<mapper namespace="com.minimarket.dao.MissionDao">
+<mapper namespace="com.minimarket.dao.UserDao">
     <!-- type：表示实体类的全限定类名  id：通过id其他标签可引用该标签-->
-    <resultMap type="com.minimarket.model.Mission" id="Misionqq">
+    <resultMap type="com.minimarket.model.User" id="Userqq">
         <!-- id 标签映射主键字段 -->
         <id property="ID" column="ID"/>
         <!-- result 标签映射其他字段 -->

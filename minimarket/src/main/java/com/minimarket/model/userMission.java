@@ -9,6 +9,7 @@ public class userMission {
     private String Poster;
     private String ID;
     private String Time;
+    private int Index;
 
     public String getReceiver() {
         return Receiver;
@@ -42,6 +43,14 @@ public class userMission {
         Time = time;
     }
 
+    public int getIndex() {
+        return Index;
+    }
+
+    public void setIndex(int index) {
+        Index = index;
+    }
+
     @Override
     public String toString() {
         return "userMission{" +
@@ -49,6 +58,7 @@ public class userMission {
                 ", Poster='" + Poster + '\'' +
                 ", ID='" + ID + '\'' +
                 ", Time='" + Time + '\'' +
+                ", Index=" + Index +
                 '}';
     }
 }
