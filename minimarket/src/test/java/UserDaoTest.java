@@ -34,9 +34,9 @@ public class UserDaoTest {
         User user1 = dao.selectUser(user);
         System.out.println(user1);
     }
-
+//注册
     @Test
-    public void testhttpSelectUser() throws Exception{
+    public void testHttpRegister() throws Exception{
         String url="http://localhost:8080/minimarket/user/register";
         JSONObject json=new JSONObject();
         json.put("ID","3");
@@ -45,12 +45,23 @@ public class UserDaoTest {
         json.put("realName","rrr");
         json.put("identityNum","888462823743273");
         json.put("gender","1");
+        //get 请求
+//        String ret = getSerchPersion(url, json.toString());
+//        System.out.println(ret);
+//        JSONObject jsonResponse=JSONObject.fromObject(param);
+//        JSONObject json = (JSONObject)jsonResponse.get("page");
+//        System.out.println(json.get("pageSize"));
 
-
-        //String url = "http://localhost:8080/";
-
-//        JSONObject param = new JSONObject();
-
+        //post 请求
+        JSONObject jsonObject = doPost(url,json);
+        System.out.println(jsonObject.toString());
+    }
+    //查询
+    @Test
+    public void testHttpSelectUser() throws Exception{
+        String url="http://172.20.10.10:8080/minimarket/user/selectUser";
+        JSONObject json=new JSONObject();
+        json.put("ID","1");
         //get 请求
 //        String ret = getSerchPersion(url, json.toString());
 //        System.out.println(ret);
