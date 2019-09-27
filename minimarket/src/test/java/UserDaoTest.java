@@ -37,9 +37,16 @@ public class UserDaoTest {
 
     @Test
     public void testhttpSelectUser() throws Exception{
-        String url="http://localhost:8080/minimarket/user/selectUser";
+        String url="http://localhost:8080/minimarket/user/register";
         JSONObject json=new JSONObject();
-        json.put("ID","2");
+        json.put("ID","3");
+        json.put("password","12212");
+        json.put("nickName","zzz");
+        json.put("realName","rrr");
+        json.put("identityNum","888462823743273");
+        json.put("gender","1");
+
+
         //String url = "http://localhost:8080/";
 
 //        JSONObject param = new JSONObject();
