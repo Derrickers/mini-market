@@ -1,5 +1,8 @@
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.alibaba.fastjson.JSONObject;
+import com.minimarket.dao.MissionDao;
 import com.minimarket.dao.userMissionDao;
+import com.minimarket.model.Mission;
 import com.minimarket.model.userMission;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,8 +21,9 @@ import static com.minimarket.utils.HttpUtil.doPost;
 public class MissionDaoTest {
     @Autowired
     private userMissionDao dao;
+    private MissionDao mdao;
     @Test
-public void  testSelectMission() throws Exception {
+    public void  testSelectMission() throws Exception {
         userMission userMission = new userMission();
         userMission.setID("12");
         String res = dao.selectReceiver(userMission);
@@ -34,6 +38,20 @@ public void  testSelectMission() throws Exception {
 
         JSONObject jsonObject = doPost(url,json);
         System.out.println(jsonObject.toString());
+    }
+    @Test
+    public void testSelectMissionListAll() throws Exception{
+        Mission mission = new Mission();
+        mission = mdao.selectMissionListAll();
+        System.out.println(mission);
+    }
+
+    @Test
+    public void testSelectMissionListUpload() throws Exception{
+        Mission mission = new Mission();
+        mission.setOwner("1");
+        Mission mission_1 = mdao.selectMissionListUpload(mission);
+        System.out.println(mission_1);
     }
 
 }

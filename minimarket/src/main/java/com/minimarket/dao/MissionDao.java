@@ -9,8 +9,8 @@ import com.minimarket.model.Mission;
 public interface MissionDao {
 
     Mission selectMissionListAll();
-    Mission selectMissionListUpload();
-    Mission selectMissionListGet();
-    Mission selectMissionInfo();
+    Mission selectMissionListUpload(Mission mission);
+    Mission selectMissionListGet(Mission mission);
+    Mission selectMissionInfo(Mission mission);
 
 }

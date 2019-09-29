@@ -23,7 +23,7 @@
         <result property="Complete" column="Complete"/>
     </resultMap>
     <!--查询当前可以接取的全部任务-->
-    <select id="selectMissionListAll" resultMap="Mission" parameterType="com.minimarket.model.Mission">
+    <select id="selectMissionListAll" resultMap="Mission">
         select * from mission_info where Status="0";
     </select>
     <!--查询当前个人发布的全部任务-->
