@@ -32,7 +32,8 @@
     </select>
     <!--查询当前个人接取的全部任务-->
     <select id="selectMissionListGet" resultMap="Mission" parameterType="com.minimarket.model.userMission">
-        select * from mission_info where ID in (select user_mission.ID from user_mission where Receiver =#{Receiver});
+        select * from mission_info where ID in
+        (select user_mission.ID from user_mission where Receiver =#{Receiver});
 </select>
     <!--查询某个任务具体信息-->
     <select id="accountUpdate" resultMap="Mission" parameterType="com.minimarket.model.Mission">

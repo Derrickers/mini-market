@@ -27,7 +27,7 @@ public void  testSelectMission() throws Exception {
     }
     @Test
     public void  httpSelectMissionTest() throws Exception {
-        userMission userMission = new userMission();
+        //userMission userMission = new userMission();
         String url="http://localhost:8080/minimarket/mission/selectMissionListAll";
         JSONObject json=new JSONObject();
         json.put("ID","12");
