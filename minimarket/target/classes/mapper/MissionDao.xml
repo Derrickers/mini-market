@@ -31,7 +31,7 @@
         select * from mission_info where Owner=#{Owner};
     </select>
     <!--查询当前个人接取的全部任务-->
-    <select id="selectMissionListGet" resultMap="Mission" parameterType="com.minimarket.model.userMission">
+    <select id="selectMissionListGet" resultMap="Mission" parameterType="com.minimarket.model.User">
         select * from mission_info where ID in
         (select user_mission.ID from user_mission where Receiver=#{ID});
 </select>

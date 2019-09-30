@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static com.minimarket.utils.HttpUtil.doPost;
 
 /**
@@ -31,20 +33,21 @@ public class UserDaoTest {
         user.setID("1");
 
         user.setPassword("123");
-        User user1 = dao.selectUser(user);
+        List<User> user1 = dao.selectUser(user);
         System.out.println(user1);
     }
+
     //注册
     @Test
-    public void testHttpRegister() throws Exception{
-        String url="http://localhost:8080/minimarket/user/register";
-        JSONObject json=new JSONObject();
-        json.put("ID","5");
-        json.put("password","12212");
-        json.put("nickName","zzz");
-        json.put("realName","rrr");
-        json.put("identityNum","888462823743273");
-        json.put("gender","1");
+    public void testHttpRegister() throws Exception {
+        String url = "http://localhost:8080/minimarket/user/register";
+        JSONObject json = new JSONObject();
+        json.put("ID", "5");
+        json.put("password", "12212");
+        json.put("nickName", "zzz");
+        json.put("realName", "rrr");
+        json.put("identityNum", "888462823743273");
+        json.put("gender", "1");
         //get 请求
 //        String ret = getSerchPersion(url, json.toString());
 //        System.out.println(ret);
@@ -53,15 +56,16 @@ public class UserDaoTest {
 //        System.out.println(json.get("pageSize"));
 
         //post 请求
-        JSONObject jsonObject = doPost(url,json);
+        JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
+
     //查询
     @Test
-    public void testHttpSelectUser() throws Exception{
-        String url="http://localhost:8080/minimarket/user/selectUser";
-        JSONObject json=new JSONObject();
-        json.put("ID","1");
+    public void testHttpSelectUser() throws Exception {
+        String url = "http://localhost:8080/minimarket/user/selectUser";
+        JSONObject json = new JSONObject();
+        json.put("ID", "1");
         //get 请求
 //        String ret = getSerchPersion(url, json.toString());
 //        System.out.println(ret);
@@ -70,7 +74,7 @@ public class UserDaoTest {
 //        System.out.println(json.get("pageSize"));
 
         //post 请求
-        JSONObject jsonObject = doPost(url,json);
+        JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
 }

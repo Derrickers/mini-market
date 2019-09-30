@@ -21,72 +21,95 @@ public class User {
     public String getID() {
         return ID;
     }
+
     public void setID(String iD) {
         ID = iD;
     }
+
     public String getPassword() {
         return Password;
     }
+
     public void setPassword(String password) {
         Password = password;
     }
+
     public String getNickName() {
         return NickName;
     }
+
     public void setNickName(String nickName) {
         NickName = nickName;
     }
+
     public String getRealName() {
         return RealName;
     }
+
     public void setRealName(String realName) {
         RealName = realName;
     }
+
     public String getIDnum() {
         return IDnum;
     }
+
     public void setIDnum(String iDnum) {
         IDnum = iDnum;
     }
+
     public int getGender() {
         return Gender;
     }
+
     public void setGender(int gender) {
         Gender = gender;
     }
+
     public String getBirthday() {
         return Birthday;
     }
+
     public void setBirthday(String birthday) {
         Birthday = birthday;
     }
+
     public String getAddress() {
         return Address;
     }
+
     public void setAddress(String address) {
         Address = address;
     }
+
     public String getTel() {
         return Tel;
     }
+
     public void setTel(String tel) {
         Tel = tel;
     }
+
     public String getEmail() {
         return Email;
     }
+
     public void setEmail(String email) {
         Email = email;
     }
+
     public double getCredit() {
         return Credit;
     }
+
     public void setCredit(int credit) {
         Credit = credit;
     }
+
     public String getPhoto() {
         return Photo;
     }
+
     public void setPhoto(String photo) {
         Photo = photo;
     }

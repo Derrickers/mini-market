@@ -56,7 +56,7 @@ public class UserController {
     public void selectUser(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
-        logger.info("1111111"+js);
+        logger.info("1111111" + js);
         User user = JSON.parseObject(js.toString(), User.class);
         ReturnMsg returnMsg = this.userService.selectUser(user);
         ObjectMapper mapper = new ObjectMapper();

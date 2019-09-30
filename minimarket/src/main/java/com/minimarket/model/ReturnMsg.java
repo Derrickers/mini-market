@@ -2,11 +2,17 @@ package com.minimarket.model;
 
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.List;
+
 /**
  * @author ronjod
  * @create 2019-09-17 14:54
  */
 public class ReturnMsg {
+    private boolean state;
+    private String msg;
+    private List<JSONObject> jsonMsg;
+
     public boolean isState() {
         return state;
     }
@@ -23,11 +29,11 @@ public class ReturnMsg {
         this.msg = msg;
     }
 
-    public JSONObject getJsonMsg() {
+    public List<JSONObject> getJsonMsg() {
         return jsonMsg;
     }
 
-    public void setJsonMsg(JSONObject jsonMsg) {
+    public void setJsonMsg(List<JSONObject> jsonMsg) {
         this.jsonMsg = jsonMsg;
     }
 
@@ -35,13 +41,9 @@ public class ReturnMsg {
     public String toString() {
         return "ReturnMsg{" +
                 "state=" + state +
-                ", num=" + msg +
-                ", jsonMsg='" + jsonMsg + '\'' +
+                ", msg='" + msg + '\'' +
+                ", jsonMsg=" + jsonMsg +
                 '}';
     }
-
-    private boolean state;
-    private String msg;
-    private JSONObject jsonMsg;
 
 }

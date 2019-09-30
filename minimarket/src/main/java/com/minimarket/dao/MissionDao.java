@@ -1,6 +1,9 @@
 package com.minimarket.dao;
 
 import com.minimarket.model.Mission;
+import com.minimarket.model.User;
+
+import java.util.List;
 
 /**
  * @author ronjod
@@ -8,9 +11,12 @@ import com.minimarket.model.Mission;
  */
 public interface MissionDao {
 
-    Mission selectMissionListAll();
-    Mission selectMissionListUpload(Mission mission);
-    Mission selectMissionListGet(Mission mission);
-    Mission selectMissionInfo(Mission mission);
+    List<Mission> selectMissionListAll();
+
+    List<Mission> selectMissionListUpload(Mission mission);
+
+    List<Mission> selectMissionListGet(User user);
+
+    List<Mission> selectMissionInfo(Mission mission);
 
 }
