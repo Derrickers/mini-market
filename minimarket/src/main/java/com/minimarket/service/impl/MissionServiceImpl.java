@@ -2,11 +2,9 @@ package com.minimarket.service.impl;
 
 import com.minimarket.controller.UserController;
 import com.minimarket.dao.MissionDao;
-import com.minimarket.dao.userMissionDao;
 import com.minimarket.model.Mission;
 import com.minimarket.model.ReturnMsg;
 import com.minimarket.model.User;
-import com.minimarket.model.userMission;
 import com.minimarket.service.MissionService;
 import com.minimarket.utils.returnMsgUtil;
 import org.slf4j.Logger;
@@ -23,19 +21,11 @@ import java.util.List;
 @Service("missionService")
 public class MissionServiceImpl implements MissionService {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-    @Resource
-    private userMissionDao userMissionDao;
+
     @Resource
     private MissionDao missionDao;
-
-    //查询接收者id
-    @Override
-    public ReturnMsg selectReceiver(userMission userMission) {
-        ReturnMsg returnMsg = new ReturnMsg();
-        String temp = userMissionDao.selectReceiver(userMission);
-        returnMsg.setMsg(temp);
-        return returnMsg;
-    }
+//    @Resource
+//    private userMissionDao userMissionDao;
 
     //a)查询当前可以接取的全部任务
     @Override
@@ -79,6 +69,54 @@ public class MissionServiceImpl implements MissionService {
             return returnMsgUtil.quickReturnMsg(temp, String.valueOf(temp.size()), true);
         } else {
             return returnMsgUtil.quickReturnMsg("数据不存在", false);
+        }
+    }
+
+    @Override
+    public ReturnMsg insertMission(Mission mission) {
+        int count = 0;
+        try {
+            count = missionDao.insertMission(mission);
+
+        } catch (Exception e) {
+            return returnMsgUtil.quickReturnMsg("任务已存在", false);
+        }
+        if (count == 1) {
+            return returnMsgUtil.quickReturnMsg("0", true);
+        } else {
+            return returnMsgUtil.quickReturnMsg("发生了啥，怎么回事，插入多条数据了？", false);
+        }
+    }
+
+    @Override
+    public ReturnMsg deleteMission(Mission mission) {
+        int count = 0;
+        try {
+            count = missionDao.deleteMission(mission);
+
+        } catch (Exception e) {
+            return returnMsgUtil.quickReturnMsg("任务不存在", false);
+        }
+        if (count == 1) {
+            return returnMsgUtil.quickReturnMsg("0", true);
+        } else {
+            return returnMsgUtil.quickReturnMsg("发生了啥，怎么回事，删多了？", false);
+        }
+    }
+
+    @Override
+    public ReturnMsg updateMission(Mission mission) {
+        int count = 0;
+        try {
+            count = missionDao.updateMission(mission);
+
+        } catch (Exception e) {
+            return returnMsgUtil.quickReturnMsg("任务不存在", false);
+        }
+        if (count == 1) {
+            return returnMsgUtil.quickReturnMsg("0", true);
+        } else {
+            return returnMsgUtil.quickReturnMsg("发生了啥，怎么回事，更新了多条数据？完蛋", false);
         }
     }
 }

@@ -29,18 +29,6 @@ public class MissionController {
     @Resource
     private MissionService missonService;
 
-    //这个是用来测试获取接收者id的控制器
-//    @RequestMapping(value = "/selectMissionListAll", method = RequestMethod.POST)
-//    public void selectMissionListAll(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
-//        response.setCharacterEncoding("UTF-8");
-//        JSONObject js = jsonbody;
-//        logger.info("1111111"+js);
-//        userMission userMission = JSON.parseObject(js.toString(), userMission.class);
-//        ReturnMsg returnMsg = this.missonService.selectReceiver(userMission);
-//        ObjectMapper mapper = new ObjectMapper();
-//        response.getWriter().write(mapper.writeValueAsString(returnMsg));
-//        response.getWriter().close();
-//    }
     //a)	查询当前可以接取的全部任务
     @RequestMapping(value = "/selectMissionListAll", method = RequestMethod.POST)
     public void selectMissionListAll(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
@@ -91,4 +79,44 @@ public class MissionController {
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
         response.getWriter().close();
     }
+
+    //插入任务信息
+    @RequestMapping(value = "/insertMission", method = RequestMethod.POST)
+    public void insertMission(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        JSONObject js = jsonbody;
+
+        Mission mission = JSON.parseObject(js.toString(), Mission.class);
+        ReturnMsg returnMsg = this.missonService.insertMission(mission);
+        ObjectMapper mapper = new ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(returnMsg));
+        response.getWriter().close();
+    }
+
+    //删除任务信息
+    @RequestMapping(value = "/deleteMission", method = RequestMethod.POST)
+    public void deleteMission(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        JSONObject js = jsonbody;
+
+        Mission mission = JSON.parseObject(js.toString(), Mission.class);
+        ReturnMsg returnMsg = this.missonService.deleteMission(mission);
+        ObjectMapper mapper = new ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(returnMsg));
+        response.getWriter().close();
+    }
+
+    //更新任务信息
+    @RequestMapping(value = "/updateMission", method = RequestMethod.POST)
+    public void updateMission(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        JSONObject js = jsonbody;
+
+        Mission mission = JSON.parseObject(js.toString(), Mission.class);
+        ReturnMsg returnMsg = this.missonService.updateMission(mission);
+        ObjectMapper mapper = new ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(returnMsg));
+        response.getWriter().close();
+    }
+
 }

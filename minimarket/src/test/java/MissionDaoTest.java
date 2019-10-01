@@ -1,6 +1,5 @@
 import com.alibaba.fastjson.JSONObject;
 import com.minimarket.dao.MissionDao;
-import com.minimarket.dao.userMissionDao;
 import com.minimarket.model.Mission;
 import com.minimarket.model.ReturnMsg;
 import com.minimarket.model.User;
@@ -22,8 +21,7 @@ import static com.minimarket.utils.HttpUtil.doPost;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring-mybatis.xml"})
 public class MissionDaoTest {
-    @Autowired
-    private userMissionDao dao;
+
     @Autowired
     private MissionDao mdao;
     @Autowired
@@ -111,6 +109,5 @@ public class MissionDaoTest {
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
-
 
 }

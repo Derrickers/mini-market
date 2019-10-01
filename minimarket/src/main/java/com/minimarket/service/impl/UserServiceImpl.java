@@ -79,20 +79,19 @@ public class UserServiceImpl implements UserService {
     //注册
     @Override
     public ReturnMsg register(User user) {
-        ReturnMsg returnMsg = new ReturnMsg();
         int count = 0;
         try {
             count = userDao.register(user);
+
         } catch (Exception e) {
-            returnMsg.setState(false);
-            returnMsg.setMsg("用户名已存在");
+            return returnMsgUtil.quickReturnMsg("用户名已存在", false);
         }
-        logger.info("54545445" + count);
         if (count == 1) {
-            returnMsg.setState(true);
-            returnMsg.setMsg("0");
+            return returnMsgUtil.quickReturnMsg("0", true);
+        } else {
+            return returnMsgUtil.quickReturnMsg("发生了啥，怎么回事", false);
         }
-        return returnMsg;
+
     }
 
     //查询
