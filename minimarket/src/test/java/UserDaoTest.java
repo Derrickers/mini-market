@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static com.minimarket.utils.HttpUtil.doPost;
 
 /**
@@ -31,7 +33,7 @@ public class UserDaoTest {
         user.setID("1");
 
         user.setPassword("123");
-        User user1 = dao.selectUser(user);
+        List<User> user1 = dao.selectUser(user);
         System.out.println(user1);
     }
     //注册

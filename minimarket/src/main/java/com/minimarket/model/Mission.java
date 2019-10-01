@@ -20,7 +20,6 @@ public class Mission {
     private double Credit;
     private String Complete;
 
-
     public String getID() {
         return ID;
     }

@@ -1,6 +1,8 @@
 package com.minimarket.service;
 
+import com.minimarket.model.Mission;
 import com.minimarket.model.ReturnMsg;
+import com.minimarket.model.User;
 import com.minimarket.model.userMission;
 
 /**
@@ -10,4 +12,19 @@ import com.minimarket.model.userMission;
 public interface MissionService {
 
     ReturnMsg selectReceiver(userMission userMission);
+
+    ReturnMsg selectMissionListAll();
+
+    ReturnMsg selectMissionListUpload(Mission mission);
+
+    ReturnMsg selectMissionListGet(User user);
+
+    ReturnMsg selectMissionInfo(Mission mission);
+
+    ReturnMsg insertMission(Mission mission);
+    ReturnMsg deleteMission(Mission mission);
+    ReturnMsg updateMission(Mission mission);
+
+
+
 }
