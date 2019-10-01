@@ -34,10 +34,65 @@
     <select id="selectMissionListGet" resultMap="Mission" parameterType="com.minimarket.model.User">
         select * from mission_info where ID in
         (select user_mission.ID from user_mission where Receiver=#{ID});
-</select>
+    </select>
     <!--查询某个任务具体信息-->
     <select id="selectMissionInfo" resultMap="Mission" parameterType="com.minimarket.model.Mission">
         select * from mission_info where ID=#{ID};
     </select>
 
+    <!--发布任务-->
+    <insert id="insertMission" parameterType="com.minimarket.model.Mission">
+        insert into mission_info
+        set ID=#{ID},Name=#{Name},Tab=#{Tab},Level=#{Level},
+        Brief=#{Brief},Quota=#{Quota},SDate=#{SDate},EDate=#{EDate},Reward=#{Reward},Credit=#{Credit};
+    </insert>
+
+    <!--撤回任务-->
+    <delete id="deleteMission" parameterType="com.minimarket.model.Mission">
+        delete from mission_info where ID=#{ID};
+    </delete>
+    <!--修改（更新）任务-->
+    <!--写入任务完成时间-->
+    <!--更新任务状态-->
+    <!--更新任务当前接受人数-->
+    <!--想更改某一个值，就把不给其他值赋值，置空即可-->
+    <update id="updateMission" parameterType="com.minimarket.model.Mission">
+        UPDATE mission_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="Name!=null">
+                Name=#{Name},
+            </if>
+            <if test="Tab!=null">
+                Tab=#{Tab},
+            </if>
+            <if test="Level!=null">
+                Level=#{Level},
+            </if>
+            <if test="Brief!=null">
+                Brief=#{Brief},
+            </if>
+            <if test="Quota!=null">
+                Quota=#{Quota},
+            </if>
+            <if test="EDate!=null">
+                EDate=#{EDate},
+            </if>
+            <if test="Reward!=null">
+                Reward=#{Reward},
+            </if>
+            <if test="Credit!=null">
+                Credit=#{Credit},
+            </if>
+            <if test="AccNum!=null">
+                AccNum=#{accNum},
+            </if>
+            <if test="Status!=null">
+                Status=#{Status},
+            </if>
+            <if test="Complete!=null">
+                Complete=#{Complete},
+            </if>
+        </trim>
+        WHERE ID=#{ID}
+    </update>
 </mapper>

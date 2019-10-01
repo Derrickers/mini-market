@@ -13,21 +13,21 @@
     </appender>
     <!--&lt;!&ndash; DEBUG &ndash;&gt;-->
     <!--<appender name="debugAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
-        <!--<file>${log.filePath}</file>-->
-        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
-            <!--<fileNamePattern>${log.filePath}-->
-            <!--</fileNamePattern>-->
-            <!--<MaxHistory>${log.maxHistory}</MaxHistory>-->
-        <!--</rollingPolicy>-->
-        <!--<encoder>-->
-            <!--<pattern>${log.pattern}</pattern>-->
-            <!--<charset>${log.charset}</charset>-->
-        <!--</encoder>-->
-        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
-            <!--<level>DEBUG</level>-->
-            <!--<onMatch>ACCEPT</onMatch>-->
-            <!--<onMismatch>DENY</onMismatch>-->
-        <!--</filter>-->
+    <!--<file>${log.filePath}</file>-->
+    <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--<fileNamePattern>${log.filePath}-->
+    <!--</fileNamePattern>-->
+    <!--<MaxHistory>${log.maxHistory}</MaxHistory>-->
+    <!--</rollingPolicy>-->
+    <!--<encoder>-->
+    <!--<pattern>${log.pattern}</pattern>-->
+    <!--<charset>${log.charset}</charset>-->
+    <!--</encoder>-->
+    <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+    <!--<level>DEBUG</level>-->
+    <!--<onMatch>ACCEPT</onMatch>-->
+    <!--<onMismatch>DENY</onMismatch>-->
+    <!--</filter>-->
     <!--</appender>-->
     <root level="debug">
         <appender-ref ref="STDOUT"/>

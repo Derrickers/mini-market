@@ -9,4 +9,6 @@ import com.minimarket.model.userMission;
 public interface userMissionDao {
     //目前没写list操作
     String selectReceiver(userMission userMission);
+    userMission acceptMission(userMission userMission);
+    userMission abortMission(userMission userMission);
 }
