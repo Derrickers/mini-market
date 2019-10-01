@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <property name="log.filePath" value="F:\log\debug"/>
+    <property name="log.charset" value="UTF-8"/>
+    <property name="log.level" value="DEBUG"/>
+    <property name="log.maxHistory" value="360"/>
+    <property name="log.pattern" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--&lt;!&ndash; DEBUG &ndash;&gt;-->
+    <!--<appender name="debugAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--<file>${log.filePath}</file>-->
+    <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--<fileNamePattern>${log.filePath}-->
+    <!--</fileNamePattern>-->
+    <!--<MaxHistory>${log.maxHistory}</MaxHistory>-->
+    <!--</rollingPolicy>-->
+    <!--<encoder>-->
+    <!--<pattern>${log.pattern}</pattern>-->
+    <!--<charset>${log.charset}</charset>-->
+    <!--</encoder>-->
+    <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+    <!--<level>DEBUG</level>-->
+    <!--<onMatch>ACCEPT</onMatch>-->
+    <!--<onMismatch>DENY</onMismatch>-->
+    <!--</filter>-->
+    <!--</appender>-->
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="debugAppender"/>-->
+    </root>
+</configuration>
