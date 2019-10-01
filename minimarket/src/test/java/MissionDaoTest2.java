@@ -3,7 +3,6 @@ import com.minimarket.dao.MissionDao;
 import com.minimarket.dao.userMissionDao;
 import com.minimarket.model.Mission;
 import com.minimarket.model.ReturnMsg;
-import com.minimarket.model.User;
 import com.minimarket.service.MissionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,8 +28,9 @@ public class MissionDaoTest2 {
     @Autowired
     private MissionService mser;
 
+    //插入任务
     @Test
-    public void testSelectMission() throws Exception {
+    public void testInsertMission() throws Exception {
         //  userMission userMission = new userMission();
         // userMission.setID("12");
 //        String res = dao.selectReceiver(userMission);
@@ -39,53 +39,8 @@ public class MissionDaoTest2 {
         System.out.println(returnMsg);
     }
 
-    //a)	查询当前可以接取的全部任务
     @Test
-    public void testSelectMissionListAll() throws Exception {
-        List<Mission> list = mdao.selectMissionListAll();
-        System.out.println(list);
-    }
-
-    @Test
-    public void httpSelectMissionListAllTest() throws Exception {
-        String url = "http://localhost:8080/minimarket/mission/selectMissionListAll";
-        JSONObject json = new JSONObject();
-        JSONObject jsonObject = doPost(url, json);
-        System.out.println(jsonObject.toString());
-    }
-
-    //b)	查询当前个人发布的全部任务
-    @Test
-    public void testSelectMissionListUpload() throws Exception {
-        Mission mission = new Mission();
-        mission.setOwner("1");
-
-        List<Mission> list = mdao.selectMissionListUpload(mission);
-        System.out.println(list);
-    }
-
-    @Test
-    public void httpSelectMissionListUploadTest() throws Exception {
-        String url = "http://localhost:8080/minimarket/mission/selectMissionListUpload";
-        JSONObject json = new JSONObject();
-        json.put("Owner", "1");
-        JSONObject jsonObject = doPost(url, json);
-        System.out.println(jsonObject.toString());
-    }
-
-    //测试c)查询当前个人接取的全部任务
-    @Test
-    public void testSelectMissionListGet() throws Exception {
-        User user = new User();
-        user.setID("2");
-        List<Mission> list = mdao.selectMissionListGet(user);
-        System.out.println(list);
-//        ReturnMsg returnMsg = mser.selectMissionListGet(user);
-//        System.out.println(returnMsg);
-    }
-
-    @Test
-    public void httpSelectMissionListGetTest() throws Exception {
+    public void httpInsertMissionTest() throws Exception {
         String url = "http://localhost:8080/minimarket/mission/selectMissionListGet";
         JSONObject json = new JSONObject();
         json.put("ID", "2");
@@ -93,23 +48,67 @@ public class MissionDaoTest2 {
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
-
-    //d)	查询某个任务具体信息
+    //更新任务
     @Test
-    public void testSelectMissionInfo() throws Exception {
+    public void UpdateMissionTest() throws Exception {
         Mission mission = new Mission();
-        mission.setID("12");
-        List<Mission> list = mdao.selectMissionInfo(mission);
+        mission.setOwner("1");
+
+        List<Mission> list = mdao.selectMissionListUpload(mission);
         System.out.println(list);
     }
 
-    public void httpSelectMissionInfo() throws Exception {
-        String url = "http://localhost:8080/minimarket/mission/selectMissionInfo";
-        JSONObject json = new JSONObject();
-        json.put("ID", "12");
 
+    @Test
+    public void httpUpdateMissionTest() throws Exception {
+        String url = "http://localhost:8080/minimarket/mission/selectMissionListAll";
+        JSONObject json = new JSONObject();
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
 
+
+
+    //删除任务
+    @Test
+    public void testDeleteMission() throws Exception {
+        List<Mission> list = mdao.selectMissionListAll();
+        System.out.println(list);
+    }
+    @Test
+    public void httpDeleteMissionTest() throws Exception {
+        String url = "http://localhost:8080/minimarket/mission/selectMissionListUpload";
+        JSONObject json = new JSONObject();
+        json.put("Owner", "1");
+        JSONObject jsonObject = doPost(url, json);
+        System.out.println(jsonObject.toString());
+    }
+    //插入关系任务
+    @Test
+    public void acceptMissionTest() throws Exception {
+        List<Mission> list = mdao.selectMissionListAll();
+        System.out.println(list);
+    }
+    @Test
+    public void httpAcceptMissionTest() throws Exception {
+        String url = "http://localhost:8080/minimarket/mission/selectMissionListUpload";
+        JSONObject json = new JSONObject();
+        json.put("Owner", "1");
+        JSONObject jsonObject = doPost(url, json);
+        System.out.println(jsonObject.toString());
+    }
+    //删除关系任务
+    @Test
+    public void abortMissionTest() throws Exception {
+        List<Mission> list = mdao.selectMissionListAll();
+        System.out.println(list);
+    }
+    @Test
+    public void httpAbortMissionTest() throws Exception {
+        String url = "http://localhost:8080/minimarket/mission/selectMissionListUpload";
+        JSONObject json = new JSONObject();
+        json.put("Owner", "1");
+        JSONObject jsonObject = doPost(url, json);
+        System.out.println(jsonObject.toString());
+    }
 }
