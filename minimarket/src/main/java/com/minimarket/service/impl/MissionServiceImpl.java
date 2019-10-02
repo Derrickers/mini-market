@@ -107,16 +107,19 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public ReturnMsg updateMission(Mission mission) {
         int count = 0;
-        try {
-            count = missionDao.updateMission(mission);
+        Object obj = null;
+        synchronized (obj) {
+            try {
+                count = missionDao.updateMission(mission);
 
-        } catch (Exception e) {
-            return returnMsgUtil.quickReturnMsg("任务不存在", false);
-        }
-        if (count == 1) {
-            return returnMsgUtil.quickReturnMsg("0", true);
-        } else {
-            return returnMsgUtil.quickReturnMsg("发生了啥，怎么回事，更新了多条数据？完蛋", false);
+            } catch (Exception e) {
+                return returnMsgUtil.quickReturnMsg("任务不存在", false);
+            }
+            if (count == 1) {
+                return returnMsgUtil.quickReturnMsg("0", true);
+            } else {
+                return returnMsgUtil.quickReturnMsg("发生了啥，怎么回事，更新了多条数据？完蛋", false);
+            }
         }
     }
 }

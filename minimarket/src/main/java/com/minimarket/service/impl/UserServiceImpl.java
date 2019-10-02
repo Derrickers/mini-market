@@ -45,7 +45,9 @@ public class UserServiceImpl implements UserService {
     public ReturnMsg accountUpdate(User user) {
         List<User> temp = userDao.selectUser(user);
 
+        Object obj=null;
         int count = 0;
+        synchronized (obj){
         try {
             count = userDao.accountUpdate(user);
 
@@ -57,7 +59,7 @@ public class UserServiceImpl implements UserService {
         } else{
             return returnMsgUtil.quickReturnMsg( "出大事了信息咋修改了多个/用户名不存在,修改失败", false);
         }
-
+    }
     }
 
     //登录
