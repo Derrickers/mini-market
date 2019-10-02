@@ -94,7 +94,7 @@ public class UserController {
         User user = JSON.parseObject(js.toString(), User.class);
         ReturnMsg returnMsg = this.userService.passwordUpdate(user);
         ObjectMapper mapper = new ObjectMapper();
-        response.getWriter().write(mapper.writeValueAsString(JSON.toJSONString(returnMsg)));
+        response.getWriter().write(mapper.writeValueAsString(returnMsg));
         response.getWriter().close();
     }
 }

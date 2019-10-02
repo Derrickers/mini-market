@@ -2,7 +2,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.minimarket.dao.MissionDao;
 import com.minimarket.dao.userMissionDao;
 import com.minimarket.model.Mission;
-import com.minimarket.model.ReturnMsg;
 import com.minimarket.model.userMission;
 import com.minimarket.service.MissionService;
 import org.junit.Test;
@@ -10,8 +9,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.List;
 
 import static com.minimarket.utils.HttpUtil.doPost;
 
@@ -54,10 +51,19 @@ public class MissionDaoTest2 {
 
     @Test
     public void httpInsertMissionTest() throws Exception {
-        String url = "http://localhost:8080/minimarket/mission/selectMissionListGet";
+        String url = "http://localhost:8080/minimarket/Mission/insertMission";
         JSONObject json = new JSONObject();
-        json.put("ID", "2");
-
+        json.put("ID", "000test");
+        json.put("Name", "000test");
+        json.put("Owner", "000test");
+        json.put("Tab", "000test");
+        json.put("Level", "1");
+        json.put("Brief", "000test");
+        json.put("Quota", "20000101");
+        json.put("SDate", "20000101");
+        json.put("EDate", "20000303");
+        json.put("Credit", "88");
+        json.put("Reward", "10");
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
@@ -113,9 +119,12 @@ public class MissionDaoTest2 {
     }
     @Test
     public void httpAcceptMissionTest() throws Exception {
-        String url = "http://localhost:8080/minimarket/mission/selectMissionListUpload";
+        String url = "http://localhost:8080/minimarket/userMission/acceptMission";
         JSONObject json = new JSONObject();
-        json.put("Owner", "1");
+        json.put("Receiver", "test1");
+        json.put("Poster", "test2");
+        json.put("ID", "000test");
+        json.put("Time", "20000202");
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }

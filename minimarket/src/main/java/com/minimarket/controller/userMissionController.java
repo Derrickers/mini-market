@@ -38,8 +38,8 @@ public class userMissionController {
     }
 
     //插入关系表信息
-    @RequestMapping(value = "/insertMission", method = RequestMethod.POST)
-    public void insertMission(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/acceptMission", method = RequestMethod.POST)
+    public void acceptMission(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
         userMission userMission = JSON.parseObject(js.toString(), userMission.class);
@@ -50,8 +50,8 @@ public class userMissionController {
     }
 
     //删除关系表信息
-    @RequestMapping(value = "/deleteMission", method = RequestMethod.POST)
-    public void deleteMission(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/abortMission", method = RequestMethod.POST)
+    public void abortMission(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
         userMission userMission = JSON.parseObject(js.toString(), userMission.class);
