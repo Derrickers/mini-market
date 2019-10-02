@@ -43,7 +43,7 @@
     <!--发布任务-->
     <insert id="insertMission" parameterType="com.minimarket.model.Mission">
         insert into mission_info
-        set ID=#{ID},Name=#{Name},Tab=#{Tab},Level=#{Level},Owner=#{Owner}
+        set ID=#{ID},Name=#{Name},Tab=#{Tab},Level=#{Level},Owner=#{Owner},
         Brief=#{Brief},Quota=#{Quota},SDate=#{SDate},EDate=#{EDate},Reward=#{Reward},Credit=#{Credit};
     </insert>
 
@@ -65,28 +65,28 @@
             <if test="Tab!=null">
                 Tab=#{Tab},
             </if>
-            <if test="Level!=null">
+            <if test="Level!=-1">
                 Level=#{Level},
             </if>
             <if test="Brief!=null">
                 Brief=#{Brief},
             </if>
-            <if test="Quota!=null">
+            <if test="Quota!=-1">
                 Quota=#{Quota},
             </if>
             <if test="EDate!=null">
                 EDate=#{EDate},
             </if>
-            <if test="Reward!=null">
+            <if test="Reward!=-1">
                 Reward=#{Reward},
             </if>
-            <if test="Credit!=null">
+            <if test="Credit!=-1">
                 Credit=#{Credit},
             </if>
-            <if test="AccNum!=null">
+            <if test="accNum!=-1">
                 AccNum=#{accNum},
             </if>
-            <if test="Status!=null">
+            <if test="Status!=-1">
                 Status=#{Status},
             </if>
             <if test="Complete!=null">
