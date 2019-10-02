@@ -3,6 +3,7 @@ import com.minimarket.dao.MissionDao;
 import com.minimarket.dao.userMissionDao;
 import com.minimarket.model.Mission;
 import com.minimarket.model.ReturnMsg;
+import com.minimarket.model.userMission;
 import com.minimarket.service.MissionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,12 +32,24 @@ public class MissionDaoTest2 {
     //插入任务
     @Test
     public void testInsertMission() throws Exception {
-        //  userMission userMission = new userMission();
-        // userMission.setID("12");
+         Mission mission = new Mission();
+         mission.setID("000test");
+         mission.setName("test");
+         mission.setOwner("test2");
+         mission.setTab("ttt");
+         mission.setLevel(5);
+         mission.setBrief("测试任务");
+         mission.setQuota(2);
+         mission.setSDate("20000101");
+         mission.setEDate("20000303");
+         mission.setReward(10);
+         mission.setCredit(88);
+         int res = mdao.insertMission(mission);
+         System.out.println(res);
 //        String res = dao.selectReceiver(userMission);
 //        System.out.println(res);
-        ReturnMsg returnMsg = mser.selectMissionListAll();
-        System.out.println(returnMsg);
+//        ReturnMsg returnMsg = mser.selectMissionListAll();
+//        System.out.println(returnMsg);
     }
 
     @Test
@@ -52,10 +65,12 @@ public class MissionDaoTest2 {
     @Test
     public void UpdateMissionTest() throws Exception {
         Mission mission = new Mission();
-        mission.setOwner("1");
-
-        List<Mission> list = mdao.selectMissionListUpload(mission);
-        System.out.println(list);
+        mission.setID("000test");
+        mission.setBrief("cecece");
+        mission.setStatus(1);
+        mission.setReward(1000);
+        int res = mdao.updateMission(mission);
+        System.out.println(res);
     }
 
 
@@ -72,8 +87,10 @@ public class MissionDaoTest2 {
     //删除任务
     @Test
     public void testDeleteMission() throws Exception {
-        List<Mission> list = mdao.selectMissionListAll();
-        System.out.println(list);
+        Mission mission = new Mission();
+        mission.setID("000test");
+        int res = mdao.deleteMission(mission);
+        System.out.println(res);
     }
     @Test
     public void httpDeleteMissionTest() throws Exception {
@@ -86,8 +103,13 @@ public class MissionDaoTest2 {
     //插入关系任务
     @Test
     public void acceptMissionTest() throws Exception {
-        List<Mission> list = mdao.selectMissionListAll();
-        System.out.println(list);
+        userMission usermission = new userMission();
+        usermission.setReceiver("test1");
+        usermission.setPoster("test2");
+        usermission.setID("000test");
+        usermission.setTime("20000202");
+        int res = dao.acceptMission(usermission);
+        System.out.println(res);
     }
     @Test
     public void httpAcceptMissionTest() throws Exception {
@@ -100,8 +122,10 @@ public class MissionDaoTest2 {
     //删除关系任务
     @Test
     public void abortMissionTest() throws Exception {
-        List<Mission> list = mdao.selectMissionListAll();
-        System.out.println(list);
+        userMission usermission = new userMission();
+        usermission.setID("000test");
+        int res = dao.abortMission(usermission);
+        System.out.println(res);
     }
     @Test
     public void httpAbortMissionTest() throws Exception {

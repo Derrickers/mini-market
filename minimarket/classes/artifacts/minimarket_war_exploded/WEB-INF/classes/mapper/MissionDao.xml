@@ -43,7 +43,7 @@
     <!--发布任务-->
     <insert id="insertMission" parameterType="com.minimarket.model.Mission">
         insert into mission_info
-        set ID=#{ID},Name=#{Name},Tab=#{Tab},Level=#{Level},
+        set ID=#{ID},Name=#{Name},Tab=#{Tab},Level=#{Level},Owner=#{Owner}
         Brief=#{Brief},Quota=#{Quota},SDate=#{SDate},EDate=#{EDate},Reward=#{Reward},Credit=#{Credit};
     </insert>
 

@@ -5,20 +5,20 @@ package com.minimarket.model;
  * @create 2019-09-27 15:07
  */
 public class Mission {
-    private String ID;
-    private String Name;
-    private int Status;
-    private String Tab;
-    private String Owner;
-    private int Level;
-    private String Brief;
-    private int Quota;
-    private int accNum;
-    private String SDate;
-    private String EDate;
-    private double Reward;
-    private double Credit;
-    private String Complete;
+    private String ID=null;
+    private String Name=null;
+    private int Status=-1;
+    private String Tab=null;
+    private String Owner=null;
+    private int Level=-1;
+    private String Brief=null;
+    private int Quota=-1;
+    private int accNum=-1;
+    private String SDate=null;
+    private String EDate=null;
+    private double Reward=-1;
+    private double Credit=-1;
+    private String Complete=null;
 
     public String getID() {
         return ID;

@@ -21,8 +21,7 @@
     <!--接受任务-->
     <insert id="acceptMission" parameterType="com.minimarket.model.userMission">
         insert into user_mission
-        set Receiver=#{Receiver},Poster=#{Poster},Tab=#{Tab},Level=#{Level},
-        Brief=#{Brief},Quota=#{Quota},SDate=#{SDate},EDate=#{EDate},Reward=#{Reward},Credit=#{Credit};
+        set Receiver=#{Receiver},Poster=#{Poster},ID=#{ID},Time=#{Time};
     </insert>
     <!--放弃任务(删除关系表中的记录)，写逻辑时还需要更改任务表状态，ID从前台传入，比如点击按钮，获取要放弃的任务ID-->
     <delete id="abortMission" parameterType="com.minimarket.model.userMission">
