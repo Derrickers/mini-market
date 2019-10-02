@@ -19,10 +19,10 @@ public interface MissionDao {
 
     List<Mission> selectMissionInfo(Mission mission);
 
-    Mission insertMission(Mission mission);
+    int insertMission(Mission mission);
 
-    Mission deleteMission(Mission mission);
+    int deleteMission(Mission mission);
 
-    Mission updateMission(Mission mission);
+    int updateMission(Mission mission);
 
 }
