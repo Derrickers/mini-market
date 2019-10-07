@@ -2,6 +2,7 @@ package com.minimarket.service.impl;
 
 import com.minimarket.controller.UserController;
 import com.minimarket.dao.UserDao;
+import com.minimarket.model.Ethereum;
 import com.minimarket.model.ReturnMsg;
 import com.minimarket.model.User;
 import com.minimarket.service.UserService;
@@ -9,8 +10,14 @@ import com.minimarket.utils.returnMsgUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.web3j.crypto.CipherException;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,11 +29,14 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Resource
     private UserDao userDao;
+    @Resource
+    private com.minimarket.service.transactionRecordService transactionRecordService;
 
     //密码修改
     @Override
     public ReturnMsg passwordUpdate(User user) {
         int count = 0;
+
         try {
             count = userDao.passwordUpdate(user);
         } catch (Exception e) {
@@ -76,13 +86,35 @@ public class UserServiceImpl implements UserService {
     @Override
     public ReturnMsg register(User user) {
         int count = 0;
+        List<String>list=new ArrayList<>(2);
+        Ethereum ethereum=null;
         try {
-            count = userDao.register(user);
-        } catch (Exception e) {
-            return returnMsgUtil.quickReturnMsg("用户名已存在", false);
+            if(userDao.checkUser(user)==null)
+            {
+                list=transactionRecordService.createAccount(user.getPassword());
+                 ethereum=new Ethereum(list.get(0),list.get(1));
+                user.setAddress(list.get(0));
+                count = userDao.register(user);
+            }else{
+                return returnMsgUtil.quickReturnMsg("用户名已存在", false);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (CipherException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        List<Ethereum> temp=new ArrayList<>();
+        temp.add(ethereum);//返回钱包地址和token
+
         if (count == 1) {
-            return returnMsgUtil.quickReturnMsg("0", true);
+            return returnMsgUtil.quickReturnMsg(temp,"0", true);
         } else {
             return returnMsgUtil.quickReturnMsg("发生了啥，怎么回事", false);
         }

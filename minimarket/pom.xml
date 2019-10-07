@@ -60,11 +60,7 @@
         </dependency>
 
         <!-- JSON -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.8.7</version>
-        </dependency>
+
 
 
         <!-- 数据库 -->
@@ -158,11 +154,7 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.5.4</version>
-        </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -172,7 +164,7 @@
     </dependencies>
 
     <build>
-        <finalName>miniMarket</finalName>
+        <finalName>minimarket</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

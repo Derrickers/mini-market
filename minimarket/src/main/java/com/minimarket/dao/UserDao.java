@@ -19,4 +19,6 @@ public interface UserDao {
     int accountUpdate(User user);
 
     int passwordUpdate(User user);
-}
+
+    String checkUser(User user);
+   }

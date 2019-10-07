@@ -18,4 +18,6 @@ public interface UserService {
     ReturnMsg accountUpdate(User user);
 
     ReturnMsg passwordUpdate(User user);
+
+
 }

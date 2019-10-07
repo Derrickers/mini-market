@@ -10,7 +10,10 @@ import java.util.List;
  */
 public interface transactionRecordDao {
 
-    int insertTransRecord();
+    int insertTransRecord(transactionRecord transactionRecord);
 
-    List<transactionRecord> selectTransRecord();
+    List<transactionRecord> selectTransRecord(String transactionRecord);
+
+    String getPasswordByAddress(String address);
+
 }

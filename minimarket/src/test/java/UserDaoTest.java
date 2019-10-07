@@ -2,6 +2,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.minimarket.controller.UserController;
 import com.minimarket.dao.UserDao;
 import com.minimarket.model.User;
+import com.minimarket.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -26,7 +27,8 @@ public class UserDaoTest {
 
     @Autowired
     private UserDao dao;
-
+    @Autowired
+    private UserService userv;
     @Test
     public void testSelectUser() throws Exception {
         User user = new User();
@@ -42,8 +44,8 @@ public class UserDaoTest {
     public void testHttpRegister() throws Exception {
         String url = "http://localhost:8080/minimarket/user/register";
         JSONObject json = new JSONObject();
-        json.put("ID", "5");
-        json.put("password", "12212");
+        json.put("ID", "14");
+        json.put("password", "licheng");
         json.put("nickName", "zzz");
         json.put("realName", "rrr");
         json.put("identityNum", "888462823743273");
@@ -59,7 +61,14 @@ public class UserDaoTest {
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
-
+    @Test
+    public void testRegister() throws Exception {
+        User user = new User();
+        user.setID("13");
+        user.setPassword("licheng");
+        user.setNickName("zzz");
+        System.out.println(userv.register(user));
+    }
     //查询
     @Test
     public void testHttpSelectUser() throws Exception {

@@ -31,7 +31,6 @@ public class userMissionServiceImpl implements userMissionService {
         } else {
             return returnMsgUtil.quickReturnMsg("发生了啥，怎么回事，插入多条数据了", false);
         }
-
     }
 
     @Override

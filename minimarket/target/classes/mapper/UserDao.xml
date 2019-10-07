@@ -29,12 +29,13 @@
         SELECT * FROM user_info WHERE id = #{ID} AND password=#{Password}
     </select>
     <!--数据插入/注册-->
-    <insert id="register" parameterType="com.minimarket.model.User">
+    <insert id="register"  parameterType="com.minimarket.model.User">
         INSERT INTO user_info set
  		id= #{ID},
  		password=#{Password},
 		nickName=#{NickName},
  		realName =#{RealName},
+ 		Address =#{Address},
    identityNum =#{IDnum},
    gender=#{Gender};
 </insert>
@@ -66,4 +67,19 @@
         SET password=#{Password}
         WHERE id= #{ID}
     </update>
+    <!--通过钱包地址获得密码-->
+    <select id="getPasswordByAddress" resultType="String" parameterType="com.minimarket.model.User">
+        SELECT password FROM user_info WHERE Address = #{Address}
+    </select>
+    <!--添加钱包地址-->
+    <update id="addressUpdate" parameterType="com.minimarket.model.User">
+        UPDATE user_info
+        SET Address =#{Address},
+        WHERE id= #{ID}
+    </update>
+
+    <select id="checkUser" resultType="int" parameterType="com.minimarket.model.User">
+        SELECT ID FROM user_info WHERE id = #{ID}
+    </select>
+
 </mapper>
