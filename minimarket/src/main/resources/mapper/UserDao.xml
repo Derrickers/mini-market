@@ -75,5 +75,4 @@
     <select id="checkUser" resultType="String" parameterType="com.minimarket.model.User">
         SELECT ID FROM user_info WHERE id = #{ID}
     </select>
-
 </mapper>
