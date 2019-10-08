@@ -4,11 +4,16 @@ import com.minimarket.dao.userMissionDao;
 import com.minimarket.model.Mission;
 import com.minimarket.model.userMission;
 import com.minimarket.service.MissionService;
+import com.minimarket.model.transactionRecord;
+import com.minimarket.dao.transactionRecordDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.math.BigInteger;
+import java.util.List;
 
 import static com.minimarket.utils.HttpUtil.doPost;
 
@@ -25,6 +30,8 @@ public class MissionDaoTest2 {
     private MissionDao mdao;
     @Autowired
     private MissionService mser;
+    @Autowired
+    private transactionRecordDao tdao;
 
     //插入任务
     @Test
@@ -143,5 +150,24 @@ public class MissionDaoTest2 {
         json.put("Owner", "1");
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
+    }
+
+    @Test
+    public void insertTransRecordTest() throws Exception{
+        BigInteger a = new BigInteger("222222");
+        transactionRecord t= new transactionRecord();
+        t.setTransOutUser("xxxx");
+        t.setTransInUser("yyyy");
+        t.setMissionId("1111");
+        t.setMissionName("qqqq");
+        t.setAmount(a);
+        int res = tdao.insertTransRecord(t);
+        System.out.println(res);
+    }
+
+    @Test
+    public void selectTransRecordTest() throws Exception{
+        List<transactionRecord> list = tdao.selectTransRecord("1111");
+        System.out.println(list);
     }
 }

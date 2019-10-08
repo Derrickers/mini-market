@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 设置为UserDao接口方法提供sql语句配置 -->
+<!-- 设置为UserMissionDao接口方法提供sql语句配置 -->
 <mapper namespace="com.minimarket.dao.userMissionDao">
     <!-- type：表示实体类的全限定类名  id：通过id其他标签可引用该标签-->
     <resultMap type="com.minimarket.model.userMission" id="userMission">

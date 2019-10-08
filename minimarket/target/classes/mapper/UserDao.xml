@@ -71,15 +71,8 @@
     <select id="getPasswordByAddress" resultType="String" parameterType="com.minimarket.model.User">
         SELECT password FROM user_info WHERE Address = #{Address}
     </select>
-    <!--添加钱包地址-->
-    <update id="addressUpdate" parameterType="com.minimarket.model.User">
-        UPDATE user_info
-        SET Address =#{Address},
-        WHERE id= #{ID}
-    </update>
-
-    <select id="checkUser" resultType="int" parameterType="com.minimarket.model.User">
+    <!--查询是否存在账号-->
+    <select id="checkUser" resultType="String" parameterType="com.minimarket.model.User">
         SELECT ID FROM user_info WHERE id = #{ID}
     </select>
-
 </mapper>

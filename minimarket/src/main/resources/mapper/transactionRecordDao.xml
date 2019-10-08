@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 设置为UserDao接口方法提供sql语句配置 -->
+<!-- 设置为transactionRecordDao接口方法提供sql语句配置 -->
 <mapper namespace="com.minimarket.dao.transactionRecordDao">
-<!--通过钱包地址获得密码-->
-<select id="getPasswordByAddress" resultType="String" parameterType="com.minimarket.model.transactionRecord">
-        SELECT password FROM user_info WHERE Address = #{Address}
+    <resultMap type="com.minimarket.model.transactionRecord" id="transactionRecord">
+        <!-- id 标签映射主键字段 -->
+        <id property="index" column="index"/>
+
+        <!-- result 标签映射其他字段 -->
+        <result property="transOutUser" column="trans_out_user"/>
+        <result property="transInUser" column="trans_in_user"/>
+        <result property="missionId" column="mission_id"/>
+        <result property="missionName" column="mission_name"/>
+        <result property="amount" column="amount"/>
+    </resultMap>
+    <!--插入记录-->
+    <insert id="insertTransRecord" parameterType="com.minimarket.model.transactionRecord">
+        insert into transaction_record
+        set trans_out_user=#{transOutUser},trans_in_user=#{transInUser},
+        mission_id=#{missionId},mission_name=#{missionName},amount=#{amount};
+    </insert>
+    <!--查询某个任务对应的记录-->
+    <select id="selectTransRecord" resultMap="transactionRecord" parameterType="String">
+        select * from transaction_record where mission_id=#{missionId};
+    </select>
+    <!--通过钱包地址获得密码-->
+    <select id="getPasswordByAddress" resultType="String" parameterType="String">
+        SELECT password FROM user_info WHERE Address = #{Address};
     </select>
 </mapper>

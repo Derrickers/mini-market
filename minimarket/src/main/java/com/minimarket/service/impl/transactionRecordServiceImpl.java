@@ -43,7 +43,7 @@ import java.util.concurrent.ExecutionException;
 @Service("transactionRecordService")
 public class transactionRecordServiceImpl implements transactionRecordService {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-    private static final String ADDRESS = "E:\\wallet\\";
+    private static final String ADDRESS = "/Users/qishuo/Downloads/block";
     private static final String CONTRACTADDRESS = "0x348f4392386ca41578018301c27fe960e4c35501";
     @Resource
     private transactionRecordDao transactionRecordDao;
