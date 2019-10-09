@@ -28,7 +28,8 @@ public class transactionRecordController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Resource
     private transactionRecordService transactionRecordService;
-//查交易信息
+
+    //查交易信息
     @RequestMapping(value = "/getTransactionRecord", method = RequestMethod.POST)
     public void getTransactionRecord(@RequestBody String address, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
@@ -37,6 +38,7 @@ public class transactionRecordController {
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
         response.getWriter().close();
     }
+
     //插入交易信息
     @RequestMapping(value = "/insertTransactionRecord", method = RequestMethod.POST)
     public void insertTransactionRecord(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
@@ -56,21 +58,22 @@ public class transactionRecordController {
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
         response.getWriter().close();
     }
-//查余额
+
+    //查余额
 //查
-@RequestMapping(value = "/getBalance", method = RequestMethod.POST)
-public void getBalance(@RequestBody String address, HttpServletResponse response) throws IOException {
-    response.setCharacterEncoding("UTF-8");
-    String money = null;
-    try {
-        money = this.transactionRecordService.getBalance(address);
-    } catch (ExecutionException e) {
-        e.printStackTrace();
-    } catch (InterruptedException e) {
-        e.printStackTrace();
+    @RequestMapping(value = "/getBalance", method = RequestMethod.POST)
+    public void getBalance(@RequestBody String address, HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        String money = null;
+        try {
+            money = this.transactionRecordService.getBalance(address);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(money));
+        response.getWriter().close();
     }
-    ObjectMapper mapper = new ObjectMapper();
-    response.getWriter().write(mapper.writeValueAsString(money));
-    response.getWriter().close();
-}
 }

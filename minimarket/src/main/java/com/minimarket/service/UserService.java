@@ -19,5 +19,4 @@ public interface UserService {
 
     ReturnMsg passwordUpdate(User user);
 
-
 }

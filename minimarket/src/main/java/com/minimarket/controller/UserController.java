@@ -39,7 +39,7 @@ public class UserController {
 //    +js.getString("IDnum")+"\n"
 //    +js.getString("Gender")+"\n"
 //    +js.getString("Birthday")+"\n"
-//    +js.getString("Address")+"\n"
+//    +js.getString("AddressUtil")+"\n"
 //    +js.getString("Tel")+"\n"
 //    +js.getString("Email")+"\n"
 //    +js.getString("Credit")+"\n"

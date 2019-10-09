@@ -124,7 +124,7 @@ public class User {
                 ", IDnum='" + IDnum + '\'' +
                 ", Gender=" + Gender +
                 ", Birthday='" + Birthday + '\'' +
-                ", Address='" + Address + '\'' +
+                ", AddressUtil='" + Address + '\'' +
                 ", Tel='" + Tel + '\'' +
                 ", Email='" + Email + '\'' +
                 ", Credit=" + Credit +

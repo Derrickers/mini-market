@@ -62,6 +62,7 @@ public class transactionRecord {
     public void setIndex(int index) {
         this.index = index;
     }
+
     @Override
     public String toString() {
         return "transactionRecord{" +

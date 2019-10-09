@@ -29,7 +29,7 @@
         SELECT * FROM user_info WHERE id = #{ID} AND password=#{Password}
     </select>
     <!--数据插入/注册-->
-    <insert id="register"  parameterType="com.minimarket.model.User">
+    <insert id="register" parameterType="com.minimarket.model.User">
         INSERT INTO user_info set
  		id= #{ID},
  		password=#{Password},

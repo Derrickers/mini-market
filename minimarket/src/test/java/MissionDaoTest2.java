@@ -1,11 +1,11 @@
 import com.alibaba.fastjson.JSONObject;
 import com.minimarket.dao.MissionDao;
+import com.minimarket.dao.transactionRecordDao;
 import com.minimarket.dao.userMissionDao;
 import com.minimarket.model.Mission;
+import com.minimarket.model.transactionRecord;
 import com.minimarket.model.userMission;
 import com.minimarket.service.MissionService;
-import com.minimarket.model.transactionRecord;
-import com.minimarket.dao.transactionRecordDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,20 +36,20 @@ public class MissionDaoTest2 {
     //插入任务
     @Test
     public void testInsertMission() throws Exception {
-         Mission mission = new Mission();
-         mission.setID("000test");
-         mission.setName("test");
-         mission.setOwner("test2");
-         mission.setTab("ttt");
-         mission.setLevel(5);
-         mission.setBrief("测试任务");
-         mission.setQuota(2);
-         mission.setSDate("20000101");
-         mission.setEDate("20000303");
-         mission.setReward(10);
-         mission.setCredit(88);
-         int res = mdao.insertMission(mission);
-         System.out.println(res);
+        Mission mission = new Mission();
+        mission.setID("000test");
+        mission.setName("test");
+        mission.setOwner("test2");
+        mission.setTab("ttt");
+        mission.setLevel(5);
+        mission.setBrief("测试任务");
+        mission.setQuota(2);
+        mission.setSDate("20000101");
+        mission.setEDate("20000303");
+        mission.setReward(10);
+        mission.setCredit(88);
+        int res = mdao.insertMission(mission);
+        System.out.println(res);
 //        String res = dao.selectReceiver(userMission);
 //        System.out.println(res);
 //        ReturnMsg returnMsg = mser.selectMissionListAll();
@@ -74,6 +74,7 @@ public class MissionDaoTest2 {
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
+
     //更新任务
     @Test
     public void UpdateMissionTest() throws Exception {
@@ -86,7 +87,6 @@ public class MissionDaoTest2 {
         System.out.println(res);
     }
 
-
     @Test
     public void httpUpdateMissionTest() throws Exception {
         String url = "http://localhost:8080/minimarket/mission/selectMissionListAll";
@@ -94,8 +94,6 @@ public class MissionDaoTest2 {
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
-
-
 
     //删除任务
     @Test
@@ -105,6 +103,7 @@ public class MissionDaoTest2 {
         int res = mdao.deleteMission(mission);
         System.out.println(res);
     }
+
     @Test
     public void httpDeleteMissionTest() throws Exception {
         String url = "http://localhost:8080/minimarket/mission/selectMissionListUpload";
@@ -113,6 +112,7 @@ public class MissionDaoTest2 {
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
+
     //插入关系任务
     @Test
     public void acceptMissionTest() throws Exception {
@@ -124,6 +124,7 @@ public class MissionDaoTest2 {
         int res = dao.acceptMission(usermission);
         System.out.println(res);
     }
+
     @Test
     public void httpAcceptMissionTest() throws Exception {
         String url = "http://localhost:8080/minimarket/userMission/acceptMission";
@@ -135,6 +136,7 @@ public class MissionDaoTest2 {
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
+
     //删除关系任务
     @Test
     public void abortMissionTest() throws Exception {
@@ -143,6 +145,7 @@ public class MissionDaoTest2 {
         int res = dao.abortMission(usermission);
         System.out.println(res);
     }
+
     @Test
     public void httpAbortMissionTest() throws Exception {
         String url = "http://localhost:8080/minimarket/mission/selectMissionListUpload";
@@ -153,9 +156,9 @@ public class MissionDaoTest2 {
     }
 
     @Test
-    public void insertTransRecordTest() throws Exception{
+    public void insertTransRecordTest() throws Exception {
         BigInteger a = new BigInteger("222222");
-        transactionRecord t= new transactionRecord();
+        transactionRecord t = new transactionRecord();
         t.setTransOutUser("xxxx");
         t.setTransInUser("yyyy");
         t.setMissionId("1111");
@@ -166,7 +169,7 @@ public class MissionDaoTest2 {
     }
 
     @Test
-    public void selectTransRecordTest() throws Exception{
+    public void selectTransRecordTest() throws Exception {
         List<transactionRecord> list = tdao.selectTransRecord("1111");
         System.out.println(list);
     }

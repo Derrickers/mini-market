@@ -6,6 +6,7 @@ import com.minimarket.model.Ethereum;
 import com.minimarket.model.ReturnMsg;
 import com.minimarket.model.User;
 import com.minimarket.service.UserService;
+import com.minimarket.utils.AddressUtil;
 import com.minimarket.utils.returnMsgUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author ronjod
@@ -40,13 +42,12 @@ public class UserServiceImpl implements UserService {
         try {
             count = userDao.passwordUpdate(user);
         } catch (Exception e) {
-            return returnMsgUtil.quickReturnMsg( "用户名不存在,密码修改失败", false);
+            return returnMsgUtil.quickReturnMsg("用户名不存在,密码修改失败", false);
         }
         if (count == 1) {
-            return returnMsgUtil.quickReturnMsg( "0", true);
-        }
-        else{
-            return returnMsgUtil.quickReturnMsg( "出大事了密码咋修改了多个/用户名不存在,密码修改失败", false);
+            return returnMsgUtil.quickReturnMsg("0", true);
+        } else {
+            return returnMsgUtil.quickReturnMsg("出大事了密码咋修改了多个/用户名不存在,密码修改失败", false);
         }
     }
 
@@ -55,30 +56,30 @@ public class UserServiceImpl implements UserService {
     public ReturnMsg accountUpdate(User user) {
         List<User> temp = userDao.selectUser(user);
 
-        Object obj=null;
+        Object obj = null;
         int count = 0;
-        synchronized (obj){
-        try {
-            count = userDao.accountUpdate(user);
+        synchronized (obj) {
+            try {
+                count = userDao.accountUpdate(user);
 
-        } catch (Exception e) {
-             return returnMsgUtil.quickReturnMsg( "用户名不存在,信息修改失败", false);
+            } catch (Exception e) {
+                return returnMsgUtil.quickReturnMsg("用户名不存在,信息修改失败", false);
+            }
+            if (count == 1) {
+                return returnMsgUtil.quickReturnMsg(temp, String.valueOf(temp.size()), true);
+            } else {
+                return returnMsgUtil.quickReturnMsg("出大事了信息咋修改了多个/用户名不存在,修改失败", false);
+            }
         }
-        if (count == 1) {
-            return returnMsgUtil.quickReturnMsg(temp, String.valueOf(temp.size()), true);
-        } else{
-            return returnMsgUtil.quickReturnMsg( "出大事了信息咋修改了多个/用户名不存在,修改失败", false);
-        }
-    }
     }
 
     //登录
     @Override
     public ReturnMsg login(User user) {
         if (userDao.login(user) != null) {
-            return returnMsgUtil.quickReturnMsg( "0", true);
+            return returnMsgUtil.quickReturnMsg("0", true);
         } else {
-                return returnMsgUtil.quickReturnMsg( "用户名/密码错误", false);
+            return returnMsgUtil.quickReturnMsg("用户名/密码错误", false);
         }
     }
 
@@ -86,16 +87,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public ReturnMsg register(User user) {
         int count = 0;
-        List<String>list=new ArrayList<>(2);
-        Ethereum ethereum=null;
+        AddressUtil addressUtil =new AddressUtil();
+        List<String> list = new ArrayList<>(2);
+        Ethereum ethereum = null;
         try {
-            if(userDao.checkUser(user)==null)
-            {
-                list=transactionRecordService.createAccount(user.getPassword());
-                 ethereum=new Ethereum(list.get(0),list.get(1));
+            if (userDao.checkUser(user) == null) {
+                list = transactionRecordService.createAccount(user.getPassword());
+                ethereum = new Ethereum(list.get(0), list.get(1));
                 user.setAddress(list.get(0));
                 count = userDao.register(user);
-            }else{
+            } else {
                 return returnMsgUtil.quickReturnMsg("用户名已存在", false);
             }
         } catch (NoSuchAlgorithmException e) {
@@ -110,11 +111,18 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
 
-        List<Ethereum> temp=new ArrayList<>();
+        List<Ethereum> temp = new ArrayList<>();
         temp.add(ethereum);//返回钱包地址和token
 
+        try {
+            transactionRecordService.freeHelp(user.getAddress());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (count == 1) {
-            return returnMsgUtil.quickReturnMsg(temp,"0", true);
+            return returnMsgUtil.quickReturnMsg(temp, "0", true);
         } else {
             return returnMsgUtil.quickReturnMsg("发生了啥，怎么回事", false);
         }

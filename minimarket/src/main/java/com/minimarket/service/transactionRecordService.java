@@ -17,8 +17,12 @@ import java.util.concurrent.ExecutionException;
  */
 public interface transactionRecordService {
     List<String> createAccount(String password) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidAlgorithmParameterException, CipherException, IOException;//创建账号
+
     String getBalance(String address) throws ExecutionException, InterruptedException;//获取余额
+
     ReturnMsg getTransactionRecord(String address);//查询交易记录
+
     ReturnMsg insertTransactionRecord(transactionRecord temp) throws ExecutionException, InterruptedException;//插入交易记录
 
+    void freeHelp(String to) throws ExecutionException, InterruptedException;
 }

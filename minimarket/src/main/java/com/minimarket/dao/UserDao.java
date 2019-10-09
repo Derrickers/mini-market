@@ -21,4 +21,4 @@ public interface UserDao {
     int passwordUpdate(User user);//可能要废弃
 
     String checkUser(User user);
-   }
+}
