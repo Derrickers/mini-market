@@ -13,6 +13,9 @@
           <element id="library" level="project" name="Maven: io.reactivex:rxjava:1.2.4" />
           <element id="library" level="project" name="Maven: com.squareup.okhttp3:logging-interceptor:3.8.1" />
           <element id="library" level="project" name="Maven: org.web3j:crypto:3.6.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.5" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.5" />
           <element id="library" level="project" name="Maven: org.web3j:rlp:3.6.0" />
           <element id="library" level="project" name="Maven: org.web3j:utils:3.6.0" />
           <element id="library" level="project" name="Maven: org.bouncycastle:bcprov-jdk15on:1.54" />
@@ -65,9 +68,6 @@
           <element id="library" level="project" name="Maven: taglibs:standard:1.1.2" />
           <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
           <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.5.4" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.5.0" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.5.4" />
         </element>
       </element>
       <element id="directory" name="META-INF">

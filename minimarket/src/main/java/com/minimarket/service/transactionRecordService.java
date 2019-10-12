@@ -25,4 +25,6 @@ public interface transactionRecordService {
     ReturnMsg insertTransactionRecord(transactionRecord temp) throws ExecutionException, InterruptedException;//插入交易记录
 
     void freeHelp(String to) throws ExecutionException, InterruptedException;
+
+    void transferEth(String walletAddress) throws ExecutionException, InterruptedException;
 }

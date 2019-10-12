@@ -6,7 +6,6 @@ package com.minimarket.utils;
  */
 
 import com.alibaba.fastjson.JSONObject;
-import com.minimarket.controller.UserController;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,8 +14,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+//import com.minimarket.controller.UserController;
 
 /**
  * Created by liqun.chen on 2017/5/15.
@@ -29,7 +28,7 @@ public class HttpUtil {
      * @param param
      * @return
      */
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+//    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 //    public static String getSerchPersion(String url, String param) {
 //        /* 1 生成 HttpClinet 对象并设置参数 */
 //        HttpClient httpClient = new HttpClient();
@@ -99,7 +98,7 @@ public class HttpUtil {
                 response = JSONObject.parseObject(result);
             }
         } catch (Exception e) {
-            logger.info("http访问失败");
+//            logger.info("http访问失败");
 
             throw new RuntimeException(e);
         }

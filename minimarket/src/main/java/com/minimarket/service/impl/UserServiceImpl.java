@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
         try {
             if (userDao.checkUser(user) == null) {
                 list = transactionRecordService.createAccount(user.getPassword());
-                ethereum = new Ethereum(list.get(0), list.get(1));
+                ethereum = new Ethereum(list.get(0),"sorry i am noob");
                 user.setAddress(list.get(0));
                 count = userDao.register(user);
             } else {
@@ -116,6 +116,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             transactionRecordService.freeHelp(user.getAddress());
+            transactionRecordService.transferEth(user.getAddress());//送你以太币，没钱了啊洒家
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

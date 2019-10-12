@@ -1,12 +1,9 @@
 import com.alibaba.fastjson.JSONObject;
-import com.minimarket.controller.UserController;
 import com.minimarket.dao.UserDao;
 import com.minimarket.model.User;
 import com.minimarket.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -14,6 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.List;
 
 import static com.minimarket.utils.HttpUtil.doPost;
+
+//import com.minimarket.controller.UserController;
 
 /**
  * @author ronjod
@@ -23,7 +22,7 @@ import static com.minimarket.utils.HttpUtil.doPost;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring-mybatis.xml"})
 public class UserDaoTest {
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+//    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserDao dao;
@@ -66,7 +65,7 @@ public class UserDaoTest {
     @Test
     public void testRegister() throws Exception {
         User user = new User();
-        user.setID("27");
+        user.setID("33");
         user.setPassword("licheng");
         user.setNickName("zzz");
         System.out.println(userv.register(user));

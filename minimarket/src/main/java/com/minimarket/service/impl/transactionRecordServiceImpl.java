@@ -7,6 +7,7 @@ import com.minimarket.model.transactionRecord;
 import com.minimarket.service.transactionRecordService;
 import com.minimarket.utils.Initial;
 import com.minimarket.utils.returnMsgUtil;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,9 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +63,11 @@ public class transactionRecordServiceImpl implements transactionRecordService {
         //加载转账所需的凭证，用私钥
 
         StringBuffer sb = new StringBuffer(ADDRESS).append(from);
-        String privateKey = getPriKey(getCredential(password, sb.toString()));
+//        String sb = ADDRESS+from;
+        //这里改成用bip的方法创建凭证试一下
+//        String privateKey = getPriKey(getCredentialByToken(password, "profit chicken weapon economy axis poem pony labor crop morning calm indicate"));
+        Credentials credential = getCredential(password, sb.toString());
+                String privateKey = getPriKey(credential);
         //私钥这里直接通过文件位置获取了
         Credentials credentials = Credentials.create(privateKey);
         //获取nonce，交易笔数
@@ -112,6 +120,7 @@ public class transactionRecordServiceImpl implements transactionRecordService {
         Credentials credentials = null;
         try {
             credentials = WalletUtils.loadCredentials(password, walletFileName);
+            System.out.println("1");
         } catch (IOException e) {
             e.printStackTrace();
             logger.info("文件不存在");
@@ -119,6 +128,11 @@ public class transactionRecordServiceImpl implements transactionRecordService {
             e.printStackTrace();
             logger.info("密钥错误");
         }
+        return credentials;
+    }
+    private static Credentials getCredentialByToken(String password, String walletFileName) {
+        Credentials credentials = null;
+        credentials = WalletUtils.loadBip39Credentials(password, walletFileName);
         return credentials;
     }
 
@@ -131,27 +145,27 @@ public class transactionRecordServiceImpl implements transactionRecordService {
     //获取私钥
 
     //以太币的交易
-    private static void transferEth(String password, String walletAddress) throws IOException, CipherException, ExecutionException, InterruptedException {
+    public  void transferEth(String walletAddress) throws ExecutionException, InterruptedException {
         //设置需要的矿工费
         BigInteger GAS_PRICE = BigInteger.valueOf(22_000_000_000L);
         BigInteger GAS_LIMIT = BigInteger.valueOf(4_300_000);
 
         //调用的是kovan测试环境，这里使用的是infura这个客户端
         Web3j web3j = Initial.getWeb3j(); //转账人账户地址
-        String ownAddress = "0x18ca8eb9166704854e823dd30415faf4f9e58439";
+        String ownAddress = "UTC--2019-10-04T12-41-16.567558100Z--42c35e4a5232ddc3179e8bcd5125f203d0d1a7ed";
         //被转人账户地址
-        String toAddress = "0x42c35e4a5232ddc3179e8bcd5125f203d0d1a7ed";
+        String toAddress = getAddress(walletAddress);
         //转账人私钥
         //Credentials credentials = Credentials.create("40d9c10db9a6c5526c8e85bcba5e7260ccfd58c1219f91e60cba50b1e48eb1fe");
-        Credentials credentials = getCredential(password, walletAddress);
+        Credentials credentials = getCredential("licheng",ADDRESS+ ownAddress);
 
         //getNonce（这里的Nonce我也不是很明白，大概是交易的笔数吧）
         EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(
-                ownAddress, DefaultBlockParameterName.LATEST).sendAsync().get();
+                getAddress(ownAddress),DefaultBlockParameterName.LATEST).sendAsync().get();
         BigInteger nonce = ethGetTransactionCount.getTransactionCount();
 
         //创建交易，这里是转0.5个以太币
-        BigInteger value = Convert.toWei("1", Convert.Unit.ETHER).toBigInteger();
+        BigInteger value = Convert.toWei("0.5", Convert.Unit.ETHER).toBigInteger();
         RawTransaction rawTransaction = RawTransaction.createEtherTransaction(
                 nonce, GAS_PRICE, GAS_LIMIT, toAddress, value);
 
@@ -173,22 +187,29 @@ public class transactionRecordServiceImpl implements transactionRecordService {
 
     @Override
     public List<String> createAccount(String password) {
-        String walletFilePath = new String(ADDRESS);//根据到时候的服务器部署
+        String walletFilePath = ADDRESS;//根据到时候的服务器部署
         String walletFileName = null;
-        Bip39Wallet wallet = null;
+        String wallet = null;
         try {
-            wallet = WalletUtils.generateBip39Wallet(password, new File(walletFilePath));
+//            wallet = WalletUtils.generateBip39Wallet(password, new File(walletFilePath));
+wallet=WalletUtils.generateNewWalletFile(password, new File(walletFilePath));
 
-            walletFileName = wallet.getFilename();
+            walletFileName = wallet;
         } catch (CipherException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
         }
-        String token = wallet.getMnemonic();
+        //String token = wallet.getMnemonic();
         List<String> list = new ArrayList<>(2);
         list.add(walletFileName);
-        list.add(token);
+//        list.add(token);
 //这里应该返回地址还是返回文件名
         return list;//返回完整文件名
     }
@@ -249,5 +270,11 @@ public class transactionRecordServiceImpl implements transactionRecordService {
             System.out.println("新用户注册，活动期间送你咱的10块钱吧");
         }
     }
+@Test
+    public void temp() throws ExecutionException, InterruptedException {
+        String from="";
+        String  to="";
 
+    System.out.println(doTransaction(from,to,BigInteger.valueOf(10000),"licheng"));
+}
 }
