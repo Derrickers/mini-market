@@ -3,6 +3,7 @@ package com.minimarket.service;
 import com.minimarket.model.Mission;
 import com.minimarket.model.ReturnMsg;
 import com.minimarket.model.User;
+import com.minimarket.model.userMission;
 
 /**
  * @author ronjod
@@ -10,7 +11,7 @@ import com.minimarket.model.User;
  */
 public interface MissionService {
 
-    ReturnMsg selectMissionListAll();
+    ReturnMsg selectMissionListAll(userMission userMission);
 
     ReturnMsg selectMissionListUpload(Mission mission);
 

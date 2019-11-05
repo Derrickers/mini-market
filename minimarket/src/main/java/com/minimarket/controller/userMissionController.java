@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
  * @author ronjod
@@ -30,7 +31,7 @@ public class userMissionController {
     public void selectReceiver(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
-        userMission userMission = JSON.parseObject(js.toString(), userMission.class);
+        userMission userMission = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), userMission.class);
         ReturnMsg returnMsg = this.userMissionService.selectReceiver(userMission);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
@@ -42,7 +43,7 @@ public class userMissionController {
     public void acceptMission(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
-        userMission userMission = JSON.parseObject(js.toString(), userMission.class);
+        userMission userMission = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), userMission.class);
         ReturnMsg returnMsg = this.userMissionService.acceptMission(userMission);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
@@ -54,10 +55,22 @@ public class userMissionController {
     public void abortMission(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
-        userMission userMission = JSON.parseObject(js.toString(), userMission.class);
+        userMission userMission = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), userMission.class);
         ReturnMsg returnMsg = this.userMissionService.abortMission(userMission);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
         response.getWriter().close();
     }
+    //更新关系表状态
+    @RequestMapping(value = "/updateMission", method = RequestMethod.POST)
+    public void updateMission(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        JSONObject js = jsonbody;
+        userMission userMission = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), userMission.class);
+        ReturnMsg returnMsg = this.userMissionService.updateMission(userMission);
+        ObjectMapper mapper = new ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(returnMsg));
+        response.getWriter().close();
+    }
+
 }

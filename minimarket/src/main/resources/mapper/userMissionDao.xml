@@ -13,10 +13,11 @@
         <result property="Receiver" column="Receiver"/>
         <result property="Poster" column="Poster"/>
         <result property="Time" column="Time"/>
+        <result property="Status" column="Status"/>
     </resultMap>
     <!--接收者查找-->
-    <select id="selectReceiver" resultType="String" parameterType="com.minimarket.model.userMission">
-        SELECT Receiver FROM user_mission WHERE ID = #{ID};
+    <select id="selectReceiver" resultType="userMission" parameterType="com.minimarket.model.userMission">
+        SELECT Receiver,Status FROM user_mission WHERE ID = #{ID} and poster=#{Poster};
     </select>
     <!--接受任务-->
     <insert id="acceptMission" parameterType="com.minimarket.model.userMission">
@@ -25,6 +26,10 @@
     </insert>
     <!--放弃任务(删除关系表中的记录)，写逻辑时还需要更改任务表状态，ID从前台传入，比如点击按钮，获取要放弃的任务ID-->
     <delete id="abortMission" parameterType="com.minimarket.model.userMission">
-        delete from user_mission where ID=#{ID};
+        delete from user_mission where ID=#{ID} and Receiver=#{Receiver};
     </delete>
+<!--    接收者任务完成 修改用户任务表记录-->
+    <update id="updateMission" parameterType="com.minimarket.model.userMission">
+        UPDATE user_mission set status=1 WHERE ID=#{ID} and Poster=#{Poster} and Receiver=#{Receiver};
+    </update>
 </mapper>

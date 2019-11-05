@@ -9,11 +9,30 @@ import java.math.BigInteger;
 public class transactionRecord {
 
     private int index;
+    private String Receiver;//接收者ID
+    private Long ID;//任务id
     private String transOutUser;
+
     private String transInUser;
     private String missionId;
     private String missionName;
     private BigInteger amount;
+
+    public String getReceiver() {
+        return Receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        Receiver = receiver;
+    }
+
+    public Long getID() {
+        return ID;
+    }
+
+    public void setID(Long ID) {
+        this.ID = ID;
+    }
 
     public String getTransOutUser() {
         return transOutUser;

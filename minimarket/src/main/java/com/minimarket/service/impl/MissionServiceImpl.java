@@ -5,6 +5,7 @@ import com.minimarket.dao.MissionDao;
 import com.minimarket.model.Mission;
 import com.minimarket.model.ReturnMsg;
 import com.minimarket.model.User;
+import com.minimarket.model.userMission;
 import com.minimarket.service.MissionService;
 import com.minimarket.utils.returnMsgUtil;
 import org.slf4j.Logger;
@@ -29,8 +30,8 @@ public class MissionServiceImpl implements MissionService {
 
     //a)查询当前可以接取的全部任务
     @Override
-    public ReturnMsg selectMissionListAll() {
-        List<Mission> temp = missionDao.selectMissionListAll();
+    public ReturnMsg selectMissionListAll(userMission userMission) {
+        List<Mission> temp = missionDao.selectMissionListAll(userMission);
         if (temp != null) {
             return returnMsgUtil.quickReturnMsg(temp, String.valueOf(temp.size()), true);
         } else {
@@ -75,9 +76,11 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public ReturnMsg insertMission(Mission mission) {
         int count = 0;
+        mission.setStatus(0);
+        //目前缺少一个判断余额是否大于的功能
+
         try {
             count = missionDao.insertMission(mission);
-
         } catch (Exception e) {
             return returnMsgUtil.quickReturnMsg("任务已存在", false);
         }
@@ -107,8 +110,7 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public ReturnMsg updateMission(Mission mission) {
         int count = 0;
-        Object obj = null;
-        synchronized (obj) {
+        synchronized (this) {//好像是类的锁
             try {
                 count = missionDao.updateMission(mission);
 

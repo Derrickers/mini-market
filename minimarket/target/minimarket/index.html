@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<script>
+    function selectUser() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("test").innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("POST", "user/selectUser", true);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send(JSON.stringify({
+            "ID": "1"
+            // ,
+            // "Password": "123",
+            // "nickName": "licheng"
+        }));
+    }
+</script>
+<body>
+<p id="test">Hello World!</p>
+<button type="button" onclick="selectUser()">onclick test</button>
+</body>
+</html>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
  * @author ronjod
@@ -45,7 +46,7 @@ public class UserController {
 //    +js.getString("Credit")+"\n"
 //    +js.getString("Photo")+"\n"
 //    );
-        User user = JSON.parseObject(js.toString(), User.class);
+        User user = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), User.class);
         ReturnMsg returnMsg = this.userService.login(user);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
@@ -57,7 +58,7 @@ public class UserController {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
         logger.info("1111111" + js);
-        User user = JSON.parseObject(js.toString(), User.class);
+        User user = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), User.class);
         ReturnMsg returnMsg = this.userService.selectUser(user);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
@@ -68,7 +69,7 @@ public class UserController {
     public void register(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
-        User user = JSON.parseObject(js.toString(), User.class);
+        User user = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), User.class);
         ReturnMsg returnMsg = this.userService.register(user);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
@@ -79,7 +80,7 @@ public class UserController {
     public void accountUpdate(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
-        User user = JSON.parseObject(js.toString(), User.class);
+        User user = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), User.class);
         ReturnMsg returnMsg = this.userService.accountUpdate(user);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
@@ -91,7 +92,7 @@ public class UserController {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
         //logger.info(js.toString());
-        User user = JSON.parseObject(js.toString(), User.class);
+        User user = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), User.class);
         ReturnMsg returnMsg = this.userService.passwordUpdate(user);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));

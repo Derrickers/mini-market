@@ -12,7 +12,7 @@ public interface transactionRecordDao {
 
     int insertTransRecord(transactionRecord transactionRecord);
 
-    List<transactionRecord> selectTransRecord(String transactionRecord);
+    List<transactionRecord> selectTransRecord(transactionRecord transactionRecord);
 
     String getPasswordByAddress(String address);
 

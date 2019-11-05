@@ -3,7 +3,9 @@ import com.minimarket.dao.MissionDao;
 import com.minimarket.model.Mission;
 import com.minimarket.model.ReturnMsg;
 import com.minimarket.model.User;
+import com.minimarket.model.userMission;
 import com.minimarket.service.MissionService;
+import com.minimarket.service.userMissionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,21 +28,25 @@ public class MissionDaoTest {
     private MissionDao mdao;
     @Autowired
     private MissionService mser;
-
+    @Autowired
+    private userMissionService umser;
     @Test
     public void testSelectMission() throws Exception {
-        //  userMission userMission = new userMission();
-        // userMission.setID("12");
+          userMission userMission = new userMission();
+         userMission.setID(3l);
+         userMission.setPoster("110");
 //        String res = dao.selectReceiver(userMission);
 //        System.out.println(res);
-        ReturnMsg returnMsg = mser.selectMissionListAll();
+        ReturnMsg returnMsg = umser.selectReceiver(userMission);
         System.out.println(returnMsg);
     }
 
     //a)	查询当前可以接取的全部任务
     @Test
     public void testSelectMissionListAll() throws Exception {
-        List<Mission> list = mdao.selectMissionListAll();
+        userMission u = new userMission();
+        u.setReceiver("2");
+        ReturnMsg list = mser.selectMissionListAll(u);
         System.out.println(list);
     }
 
@@ -48,6 +54,7 @@ public class MissionDaoTest {
     public void httpSelectMissionListAllTest() throws Exception {
         String url = "http://localhost:8080/minimarket/mission/selectMissionListAll";
         JSONObject json = new JSONObject();
+        json.put("Receiver","2");
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
@@ -56,7 +63,7 @@ public class MissionDaoTest {
     @Test
     public void testSelectMissionListUpload() throws Exception {
         Mission mission = new Mission();
-        mission.setOwner("1");
+        mission.setOwner("888");
 
         List<Mission> list = mdao.selectMissionListUpload(mission);
         System.out.println(list);
@@ -66,7 +73,7 @@ public class MissionDaoTest {
     public void httpSelectMissionListUploadTest() throws Exception {
         String url = "http://localhost:8080/minimarket/mission/selectMissionListUpload";
         JSONObject json = new JSONObject();
-        json.put("Owner", "1");
+        json.put("Owner", "888");
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
@@ -75,7 +82,7 @@ public class MissionDaoTest {
     @Test
     public void testSelectMissionListGet() throws Exception {
         User user = new User();
-        user.setID("2");
+        user.setID("3");
         List<Mission> list = mdao.selectMissionListGet(user);
         System.out.println(list);
 //        ReturnMsg returnMsg = mser.selectMissionListGet(user);
@@ -86,7 +93,7 @@ public class MissionDaoTest {
     public void httpSelectMissionListGetTest() throws Exception {
         String url = "http://localhost:8080/minimarket/mission/selectMissionListGet";
         JSONObject json = new JSONObject();
-        json.put("ID", "2");
+        json.put("ID", "101");
 
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
@@ -96,15 +103,18 @@ public class MissionDaoTest {
     @Test
     public void testSelectMissionInfo() throws Exception {
         Mission mission = new Mission();
-        mission.setID("12");
+        mission.setID(3);
         List<Mission> list = mdao.selectMissionInfo(mission);
+//        ReturnMsg list = mser.selectMissionInfo(mission);
+
         System.out.println(list);
     }
 
+    @Test
     public void httpSelectMissionInfo() throws Exception {
         String url = "http://localhost:8080/minimarket/mission/selectMissionInfo";
         JSONObject json = new JSONObject();
-        json.put("ID", "12");
+        json.put("ID", "1");
 
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());

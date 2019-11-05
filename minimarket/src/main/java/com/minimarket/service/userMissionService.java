@@ -15,4 +15,6 @@ public interface userMissionService {
 
     ReturnMsg selectReceiver(userMission userMission);
 
+    ReturnMsg updateMission(userMission userMission);
+
 }

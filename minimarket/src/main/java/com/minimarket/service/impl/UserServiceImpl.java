@@ -54,14 +54,12 @@ public class UserServiceImpl implements UserService {
     //信息修改
     @Override
     public ReturnMsg accountUpdate(User user) {
-        List<User> temp = userDao.selectUser(user);
-
-        Object obj = null;
+        List<User> temp = null;
         int count = 0;
-        synchronized (obj) {
+        synchronized (this) {
             try {
                 count = userDao.accountUpdate(user);
-
+                temp = userDao.selectUser(user);
             } catch (Exception e) {
                 return returnMsgUtil.quickReturnMsg("用户名不存在,信息修改失败", false);
             }

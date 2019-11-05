@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -31,7 +32,7 @@ public class transactionRecordController {
 
     //查交易信息
     @RequestMapping(value = "/getTransactionRecord", method = RequestMethod.POST)
-    public void getTransactionRecord(@RequestBody String address, HttpServletResponse response) throws IOException {
+    public void getTransactionRecord(@RequestBody transactionRecord address, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         ReturnMsg returnMsg = this.transactionRecordService.getTransactionRecord(address);
         ObjectMapper mapper = new ObjectMapper();
@@ -45,7 +46,7 @@ public class transactionRecordController {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
 
-        transactionRecord transactionRecord = JSON.parseObject(js.toString(), transactionRecord.class);
+        transactionRecord transactionRecord = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), transactionRecord.class);
         ReturnMsg returnMsg = null;
         try {
             returnMsg = this.transactionRecordService.insertTransactionRecord(transactionRecord);

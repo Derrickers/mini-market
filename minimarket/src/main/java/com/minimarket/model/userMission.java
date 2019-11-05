@@ -7,9 +7,18 @@ package com.minimarket.model;
 public class userMission {
     private String Receiver;
     private String Poster;
-    private String ID;
+    private long ID;
     private String Time;
     private int Index;
+    private int Status;
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int status) {
+        Status = status;
+    }
 
     public String getReceiver() {
         return Receiver;
@@ -27,14 +36,13 @@ public class userMission {
         Poster = poster;
     }
 
-    public String getID() {
+    public long getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(long ID) {
         this.ID = ID;
     }
-
     public String getTime() {
         return Time;
     }
@@ -56,9 +64,10 @@ public class userMission {
         return "userMission{" +
                 "Receiver='" + Receiver + '\'' +
                 ", Poster='" + Poster + '\'' +
-                ", ID='" + ID + '\'' +
+                ", ID=" + ID +
                 ", Time='" + Time + '\'' +
                 ", Index=" + Index +
+                ", Status=" + Status +
                 '}';
     }
 }

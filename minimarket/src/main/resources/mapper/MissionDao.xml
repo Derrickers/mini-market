@@ -15,7 +15,7 @@
         <result property="Level" column="Level"/>
         <result property="Brief" column="Brief"/>
         <result property="Quota" column="Quota"/>
-        <result property="accNum" column="AccNum"/>
+        <result property="accNum" column="accNum"/>
         <result property="SDate" column="SDate"/>
         <result property="EDate" column="EDate"/>
         <result property="Reward" column="Reward"/>
@@ -23,8 +23,8 @@
         <result property="Complete" column="Complete"/>
     </resultMap>
     <!--查询当前可以接取的全部任务-->
-    <select id="selectMissionListAll" resultMap="Mission">
-        select * from mission_info where Status="0";
+    <select id="selectMissionListAll" resultMap="Mission" parameterType="com.minimarket.model.userMission">
+        select * from mission_info where Status="0" and id not in (select id from user_mission where Receiver=#{Receiver});
     </select>
     <!--查询当前个人发布的全部任务-->
     <select id="selectMissionListUpload" resultMap="Mission" parameterType="com.minimarket.model.Mission">
@@ -43,7 +43,7 @@
     <!--发布任务-->
     <insert id="insertMission" parameterType="com.minimarket.model.Mission">
         insert into mission_info
-        set ID=#{ID},Name=#{Name},Tab=#{Tab},Level=#{Level},Owner=#{Owner},
+        set Name=#{Name},Tab=#{Tab},Level=#{Level},Owner=#{Owner},Status=#{Status},accNum=#{accNum},
         Brief=#{Brief},Quota=#{Quota},SDate=#{SDate},EDate=#{EDate},Reward=#{Reward},Credit=#{Credit};
     </insert>
 
@@ -95,4 +95,6 @@
         </trim>
         WHERE ID=#{ID}
     </update>
+
+
 </mapper>

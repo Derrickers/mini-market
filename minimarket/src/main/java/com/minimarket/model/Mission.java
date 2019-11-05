@@ -5,7 +5,7 @@ package com.minimarket.model;
  * @create 2019-09-27 15:07
  */
 public class Mission {
-    private String ID = null;
+    private long ID;
     private String Name = null;
     private int Status = -1;
     private String Tab = null;
@@ -20,11 +20,11 @@ public class Mission {
     private double Credit = -1;
     private String Complete = null;
 
-    public String getID() {
+    public long getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(long ID) {
         this.ID = ID;
     }
 

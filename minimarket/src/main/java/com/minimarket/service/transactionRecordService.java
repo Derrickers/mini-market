@@ -20,11 +20,14 @@ public interface transactionRecordService {
 
     String getBalance(String address) throws ExecutionException, InterruptedException;//获取余额
 
-    ReturnMsg getTransactionRecord(String address);//查询交易记录
+    ReturnMsg getTransactionRecord(transactionRecord address);//查询交易记录
 
     ReturnMsg insertTransactionRecord(transactionRecord temp) throws ExecutionException, InterruptedException;//插入交易记录
 
     void freeHelp(String to) throws ExecutionException, InterruptedException;
 
     void transferEth(String walletAddress) throws ExecutionException, InterruptedException;
+
+    void getMissionInfoByHash(String hash) throws ExecutionException, InterruptedException
+            ;
 }

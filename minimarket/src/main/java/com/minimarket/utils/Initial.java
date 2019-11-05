@@ -17,6 +17,7 @@ public class Initial {
         if (web3j == null) {
             web3j = Web3j.build(new HttpService("https://ropsten.infura.io/v3/826618f408214f28a0c5b030860341fe"));
         }
+
         return web3j;
     }
 }

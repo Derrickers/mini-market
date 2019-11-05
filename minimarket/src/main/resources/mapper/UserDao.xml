@@ -75,4 +75,14 @@
     <select id="checkUser" resultType="String" parameterType="com.minimarket.model.User">
         SELECT ID FROM user_info WHERE id = #{ID}
     </select>
+    <!--查询接收者的钱包地址-->
+    <select id="getAddressByReceiver" resultType="String" parameterType="com.minimarket.model.userMission">
+        select Address from user_info where ID in (select Receiver from user_mission where Receiver = #{Receiver} and ID = #{ID});
+    </select>
+    <!--查询发布者的钱包地址-->
+    <select id="getAddressByPoster" resultType="String" parameterType="com.minimarket.model.userMission">
+        select distinct Poster from user_mission where Receiver = #{Receiver} and ID = #{ID};
+    </select>
+
+
 </mapper>

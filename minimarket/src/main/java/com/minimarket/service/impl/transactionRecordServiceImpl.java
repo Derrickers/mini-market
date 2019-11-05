@@ -1,10 +1,16 @@
 package com.minimarket.service.impl;
 
 import com.minimarket.controller.UserController;
+import com.minimarket.dao.MissionDao;
+import com.minimarket.dao.UserDao;
 import com.minimarket.dao.transactionRecordDao;
+import com.minimarket.model.Mission;
 import com.minimarket.model.ReturnMsg;
 import com.minimarket.model.transactionRecord;
+import com.minimarket.model.userMission;
 import com.minimarket.service.transactionRecordService;
+import com.minimarket.utils.AddressUtil;
+import com.minimarket.utils.HexChangeString;
 import com.minimarket.utils.Initial;
 import com.minimarket.utils.returnMsgUtil;
 import org.junit.Test;
@@ -16,10 +22,12 @@ import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Function;
 import org.web3j.abi.datatypes.Type;
+import org.web3j.abi.datatypes.Utf8String;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.*;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.Ethereum;
 import org.web3j.protocol.core.methods.request.Transaction;
 import org.web3j.protocol.core.methods.response.EthCall;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
@@ -35,6 +43,7 @@ import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,25 +58,91 @@ import static com.minimarket.utils.AddressUtil.getAddress;
 @Service("transactionRecordService")
 public class transactionRecordServiceImpl implements transactionRecordService {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-    //    private static final String ADDRESS = "/Users/qishuo/Downloads/block";
-    private static final String ADDRESS = "E:\\wallet\\";
+    private static final String ADDRESS = "/Users/qishuo/Downloads/block/";
+    //private static final String ADDRESS = "E:\\wallet\\";
     private static final String CONTRACTADDRESS = "0x348f4392386ca41578018301c27fe960e4c35501";
+
     @Resource
     private transactionRecordDao transactionRecordDao;
+    @Resource
+    private UserDao userDao;
+    @Resource
+    private MissionDao missionDao;
 
+
+    //重载的交易函数 增加并传入区块任务id
     private static boolean doTransaction(String from,
                                          String to,
                                          BigInteger value,
-                                         String password) throws ExecutionException, InterruptedException { //存在区块信息的时候再执行插入，但是这样貌似会有延迟
+                                         String password,String id) throws ExecutionException, InterruptedException { //存在区块信息的时候再执行插入，但是这样貌似会有延迟
+        if (BigInteger.valueOf(Long.valueOf(getBalance2(getAddress(from)))).compareTo(BigInteger.valueOf(Long.valueOf(value.toString()))) < 0)
+            return false;
+
         Web3j web3j = Initial.getWeb3j();
         //加载转账所需的凭证，用私钥
+
 
         StringBuffer sb = new StringBuffer(ADDRESS).append(from);
 //        String sb = ADDRESS+from;
         //这里改成用bip的方法创建凭证试一下
 //        String privateKey = getPriKey(getCredentialByToken(password, "profit chicken weapon economy axis poem pony labor crop morning calm indicate"));
         Credentials credential = getCredential(password, sb.toString());
-                String privateKey = getPriKey(credential);
+        String privateKey = getPriKey(credential);
+        //私钥这里直接通过文件位置获取了
+        Credentials credentials = Credentials.create(privateKey);
+        //获取nonce，交易笔数
+        BigInteger nonce = getNonce(getAddress(from));
+        //get gasPrice
+        BigInteger gasPrice = BigInteger.valueOf(22_000_000_000L);
+        BigInteger gasLimit = BigInteger.valueOf(4_300_000);
+
+        //创建RawTransaction交易对象
+        Function function = new Function("transfer",
+                Arrays.asList(new Address(getAddress(to)), new Uint256(value), new Utf8String(id)),//插入附加信息
+                Arrays.asList(new TypeReference<Type>() {
+                }));
+
+        String encodedFunction = FunctionEncoder.encode(function);
+//创建离线签名
+        RawTransaction rawTransaction = RawTransaction.createTransaction(nonce,
+                gasPrice,
+                gasLimit,
+                CONTRACTADDRESS, encodedFunction);
+
+        //签名Transaction，这里要对交易做签名
+        byte[] signMessage = TransactionEncoder.signMessage(rawTransaction, credentials);
+        String hexValue = Numeric.toHexString(signMessage);
+        //发送交易
+        EthSendTransaction ethSendTransaction = web3j.ethSendRawTransaction(hexValue).sendAsync().get();
+        logger.info("11111111111111111" + ethSendTransaction.getTransactionHash());
+
+        String temp = ethSendTransaction.getTransactionHash();
+        Thread.sleep(17000l);//等待17s
+        EthTransaction ethTransaction = web3j.ethGetTransactionByHash(temp).sendAsync().get();
+        if (ethTransaction.getResult().getBlockHash() != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean doTransaction(String from,
+                                         String to,
+                                         BigInteger value,
+                                         String password) throws ExecutionException, InterruptedException { //存在区块信息的时候再执行插入，但是这样貌似会有延迟
+        if (BigInteger.valueOf(Long.valueOf(getBalance2(getAddress(from)))).compareTo(BigInteger.valueOf(Long.valueOf(value.toString()))) < 0)
+            return false;
+
+        Web3j web3j = Initial.getWeb3j();
+        //加载转账所需的凭证，用私钥
+
+
+        StringBuffer sb = new StringBuffer(ADDRESS).append(from);
+//        String sb = ADDRESS+from;
+        //这里改成用bip的方法创建凭证试一下
+//        String privateKey = getPriKey(getCredentialByToken(password, "profit chicken weapon economy axis poem pony labor crop morning calm indicate"));
+        Credentials credential = getCredential(password, sb.toString());
+        String privateKey = getPriKey(credential);
         //私钥这里直接通过文件位置获取了
         Credentials credentials = Credentials.create(privateKey);
         //获取nonce，交易笔数
@@ -97,7 +172,7 @@ public class transactionRecordServiceImpl implements transactionRecordService {
         logger.info("11111111111111111" + ethSendTransaction.getTransactionHash());
 
         String temp = ethSendTransaction.getTransactionHash();
-        Thread.sleep(10000l);//等待10s
+        Thread.sleep(17000l);//等待17s
         EthTransaction ethTransaction = web3j.ethGetTransactionByHash(temp).sendAsync().get();
         if (ethTransaction.getResult().getBlockHash() != null) {
             return true;
@@ -130,6 +205,7 @@ public class transactionRecordServiceImpl implements transactionRecordService {
         }
         return credentials;
     }
+
     private static Credentials getCredentialByToken(String password, String walletFileName) {
         Credentials credentials = null;
         credentials = WalletUtils.loadBip39Credentials(password, walletFileName);
@@ -145,7 +221,7 @@ public class transactionRecordServiceImpl implements transactionRecordService {
     //获取私钥
 
     //以太币的交易
-    public  void transferEth(String walletAddress) throws ExecutionException, InterruptedException {
+    public void transferEth(String walletAddress) throws ExecutionException, InterruptedException {
         //设置需要的矿工费
         BigInteger GAS_PRICE = BigInteger.valueOf(22_000_000_000L);
         BigInteger GAS_LIMIT = BigInteger.valueOf(4_300_000);
@@ -157,11 +233,11 @@ public class transactionRecordServiceImpl implements transactionRecordService {
         String toAddress = getAddress(walletAddress);
         //转账人私钥
         //Credentials credentials = Credentials.create("40d9c10db9a6c5526c8e85bcba5e7260ccfd58c1219f91e60cba50b1e48eb1fe");
-        Credentials credentials = getCredential("licheng",ADDRESS+ ownAddress);
+        Credentials credentials = getCredential("licheng", ADDRESS + ownAddress);
 
         //getNonce（这里的Nonce我也不是很明白，大概是交易的笔数吧）
         EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(
-                getAddress(ownAddress),DefaultBlockParameterName.LATEST).sendAsync().get();
+                getAddress(ownAddress), DefaultBlockParameterName.LATEST).sendAsync().get();
         BigInteger nonce = ethGetTransactionCount.getTransactionCount();
 
         //创建交易，这里是转0.5个以太币
@@ -184,7 +260,6 @@ public class transactionRecordServiceImpl implements transactionRecordService {
     }
 
 
-
     @Override
     public List<String> createAccount(String password) {
         String walletFilePath = ADDRESS;//根据到时候的服务器部署
@@ -192,7 +267,7 @@ public class transactionRecordServiceImpl implements transactionRecordService {
         String wallet = null;
         try {
 //            wallet = WalletUtils.generateBip39Wallet(password, new File(walletFilePath));
-wallet=WalletUtils.generateNewWalletFile(password, new File(walletFilePath));
+            wallet = WalletUtils.generateNewWalletFile(password, new File(walletFilePath));
 
             walletFileName = wallet;
         } catch (CipherException e) {
@@ -234,8 +309,26 @@ wallet=WalletUtils.generateNewWalletFile(password, new File(walletFilePath));
         return value;
     }
 
+    public static String getBalance2(String address) throws ExecutionException, InterruptedException {
+        Function function = new Function("balanceOf",
+                Arrays.asList(new Address(address)),
+                Arrays.asList(new TypeReference<Address>() {
+                }));
+
+        Web3j web3j = Initial.getWeb3j();
+        String encode = FunctionEncoder.encode(function);
+        //logger.info( "getERC20Balance encode : " + encode);
+        Transaction ethCallTransaction = Transaction.createEthCallTransaction(address, CONTRACTADDRESS, encode);
+        EthCall ethCall = web3j.ethCall(ethCallTransaction, DefaultBlockParameterName.LATEST).sendAsync().get();
+        String value = ethCall.getResult();
+        //logger.info( "getERC20Balance balance : " +  value.substring(2));
+
+        value = new BigInteger(value.substring(2), 16).toString();
+        return value;
+    }
+
     @Override
-    public ReturnMsg getTransactionRecord(String address) {
+    public ReturnMsg getTransactionRecord(transactionRecord address) {
         List<transactionRecord> transactionRecords = transactionRecordDao.selectTransRecord(address);
         if (transactionRecords != null) {
             return returnMsgUtil.quickReturnMsg(transactionRecords, String.valueOf(transactionRecords.size()), true);
@@ -248,18 +341,38 @@ wallet=WalletUtils.generateNewWalletFile(password, new File(walletFilePath));
     @Override
     public ReturnMsg insertTransactionRecord(transactionRecord temp) throws ExecutionException, InterruptedException { //存在区块信息的时候再执行插入，但是这样貌似会有延迟
 
+
+        Mission mission = new Mission();
+        mission.setID(Long.valueOf(temp.getMissionId()));
+
+        List<Mission> missions = missionDao.selectMissionInfo(mission);//通过id，找到对应的任务报酬和名字
+
+        userMission userMission = new userMission();
+        userMission.setReceiver(temp.getReceiver());
+        userMission.setID(Long.valueOf(temp.getMissionId()));
+
         String from = temp.getTransOutUser();
-        String to = temp.getTransInUser();
-        BigInteger value = temp.getAmount();
-        String password = transactionRecordDao.getPasswordByAddress(temp.getTransOutUser());//用比较坑爹办法获取密码
+
+        String to = userDao.getAddressByReceiver(userMission);
+
+        double reward = missions.get(0).getReward() * 10000;
+        temp.setMissionName(missions.get(0).getName());
+        DecimalFormat decimalFormat = new DecimalFormat("###################.###########");//改小数点
+        System.out.println(decimalFormat.format(reward));
+        BigInteger value = BigInteger.valueOf(Long.valueOf(decimalFormat.format(reward)));
+
+        String password = transactionRecordDao.getPasswordByAddress(from);//用比较坑爹办法获取密码
         //String password = "licheng";//用比较坑爹办法获取密码
-        if (doTransaction(from, to, value, password)) {
-           // transactionRecordDao.insertTransRecord(temp);
+        if (doTransaction(from, to, value, password,temp.getMissionId())) {
+            temp.setTransInUser(to);
+            temp.setAmount(value);
+            transactionRecordDao.insertTransRecord(temp);
             return returnMsgUtil.quickReturnMsg("交易成功", true);
         } else {
             return returnMsgUtil.quickReturnMsg("交易失败，数据不插入", false);
         }
     }
+
     public void freeHelp(String to) throws ExecutionException, InterruptedException {
         String from = "UTC--2019-10-04T12-41-16.567558100Z--42c35e4a5232ddc3179e8bcd5125f203d0d1a7ed";
         //String to = temp.getTransInUser();
@@ -270,11 +383,23 @@ wallet=WalletUtils.generateNewWalletFile(password, new File(walletFilePath));
             System.out.println("新用户注册，活动期间送你咱的10块钱吧");
         }
     }
-@Test
-    public void temp() throws ExecutionException, InterruptedException {
-        String from="";
-        String  to="";
 
-    System.out.println(doTransaction(from,to,BigInteger.valueOf(10000),"licheng"));
-}
+    @Test
+    public void temp() throws ExecutionException, InterruptedException {
+        String to = "UTC--2019-11-02T07-45-03.546897000Z--7e6a71b95df772c51f886521cd9b86e502b57a87.json";
+        String from = "UTC--2019-10-14T14-13-45.372260000Z--f6dd0926a24aad30bf4ee63aee74da518f123fff.json";
+
+        System.out.println(doTransaction(from, to, BigInteger.valueOf(10000), "licheng"));
+    }
+
+
+    public void getMissionInfoByHash(String hash) throws ExecutionException, InterruptedException {
+        Web3j web3j = Initial.getWeb3j();
+        EthTransaction ethTransaction = web3j.ethGetTransactionByHash(hash).sendAsync().get();
+        String input = ethTransaction.getResult().getInput();//附 加信息
+//        input = input.substring(240);
+        input = input.replace("0x","");
+        String res = HexChangeString.repStringHex(input);
+        System.out.println(res);
+    }
 }

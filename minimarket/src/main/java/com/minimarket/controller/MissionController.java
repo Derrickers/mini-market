@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.minimarket.model.Mission;
 import com.minimarket.model.ReturnMsg;
 import com.minimarket.model.User;
+import com.minimarket.model.userMission;
 import com.minimarket.service.MissionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
  * @author ronjod
@@ -28,14 +30,13 @@ public class MissionController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Resource
     private MissionService missonService;
-
     //a)	查询当前可以接取的全部任务
     @RequestMapping(value = "/selectMissionListAll", method = RequestMethod.POST)
     public void selectMissionListAll(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
-
-        ReturnMsg returnMsg = this.missonService.selectMissionListAll();
+        userMission userMission = JSON.parseObject(js.toString(), userMission.class);
+        ReturnMsg returnMsg = this.missonService.selectMissionListAll(userMission);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
         response.getWriter().close();
@@ -44,10 +45,10 @@ public class MissionController {
     // b)	查询当前个人发布的全部任务
     @RequestMapping(value = "/selectMissionListUpload", method = RequestMethod.POST)
     public void selectMissionListUpload(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
-        response.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("charset=utf-8");
         JSONObject js = jsonbody;
-
-        Mission mission = JSON.parseObject(js.toString(), Mission.class);
+        Mission mission = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), Mission.class);
         ReturnMsg returnMsg = this.missonService.selectMissionListUpload(mission);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
@@ -58,9 +59,10 @@ public class MissionController {
     @RequestMapping(value = "/selectMissionListGet", method = RequestMethod.POST)
     public void selectMissionListGet(@RequestBody JSONObject jsonbody, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
+        response.setContentType("charset=utf-8");
         JSONObject js = jsonbody;
 
-        User user = JSON.parseObject(js.toString(), User.class);
+        User user = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), User.class);
         ReturnMsg returnMsg = this.missonService.selectMissionListGet(user);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
@@ -73,7 +75,7 @@ public class MissionController {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
 
-        Mission mission = JSON.parseObject(js.toString(), Mission.class);
+        Mission mission = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), Mission.class);
         ReturnMsg returnMsg = this.missonService.selectMissionInfo(mission);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
@@ -86,7 +88,7 @@ public class MissionController {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
 
-        Mission mission = JSON.parseObject(js.toString(), Mission.class);
+        Mission mission = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), Mission.class);
         ReturnMsg returnMsg = this.missonService.insertMission(mission);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
@@ -99,7 +101,7 @@ public class MissionController {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
 
-        Mission mission = JSON.parseObject(js.toString(), Mission.class);
+        Mission mission = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), Mission.class);
         ReturnMsg returnMsg = this.missonService.deleteMission(mission);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));
@@ -112,7 +114,7 @@ public class MissionController {
         response.setCharacterEncoding("UTF-8");
         JSONObject js = jsonbody;
 
-        Mission mission = JSON.parseObject(js.toString(), Mission.class);
+        Mission mission = JSON.parseObject(js.toString().getBytes(Charset.forName("utf-8")), Mission.class);
         ReturnMsg returnMsg = this.missonService.updateMission(mission);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(returnMsg));

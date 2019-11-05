@@ -1,6 +1,7 @@
 package com.minimarket.dao;
 
 import com.minimarket.model.User;
+import com.minimarket.model.userMission;
 
 import java.util.List;
 
@@ -21,4 +22,8 @@ public interface UserDao {
     int passwordUpdate(User user);//可能要废弃
 
     String checkUser(User user);
+
+    String getAddressByReceiver(userMission userMission);
+
+    String getAddressByPoster(userMission userMission);
 }

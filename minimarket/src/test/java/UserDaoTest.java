@@ -44,11 +44,11 @@ public class UserDaoTest {
     public void testHttpRegister() throws Exception {
         String url = "http://localhost:8080/minimarket/user/register";
         JSONObject json = new JSONObject();
-        json.put("ID", "17");
+        json.put("ID", "1199999");
         json.put("password", "licheng");
         json.put("nickName", "zzz");
         json.put("realName", "rrr");
-        json.put("identityNum", "888462823743273");
+        json.put("IDnum", "888462823743273");
         json.put("gender", "1");
         //get 请求
 //        String ret = getSerchPersion(url, json.toString());
@@ -65,9 +65,10 @@ public class UserDaoTest {
     @Test
     public void testRegister() throws Exception {
         User user = new User();
-        user.setID("33");
+        user.setID("8999998");
         user.setPassword("licheng");
         user.setNickName("zzz");
+        user.setIDnum("888462823743273");
         System.out.println(userv.register(user));
     }
 
@@ -76,7 +77,7 @@ public class UserDaoTest {
     public void testHttpSelectUser() throws Exception {
         String url = "http://localhost:8080/minimarket/user/selectUser";
         JSONObject json = new JSONObject();
-        json.put("ID", "1");
+        json.put("ID", "99999");
 
         //post 请求
         JSONObject jsonObject = doPost(url, json);
@@ -89,7 +90,11 @@ public class UserDaoTest {
         String url = "http://localhost:8080/minimarket/user/accountUpdate";
         JSONObject json = new JSONObject();
         json.put("ID", "3");
-        json.put("NickName", "335433");
+//        json.put("NickName", "335433");
+        json.put("Tel", "3");
+        json.put("NickName", "eew");
+        json.put("Email", "1");
+        json.put("Birthday", "20030303");
         //get 请求
 //        String ret = getSerchPersion(url, json.toString());
 //        System.out.println(ret);
@@ -101,7 +106,14 @@ public class UserDaoTest {
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
+    @Test
+    public void testAccountUpdate() throws Exception {
+        User user = new User();
+        user.setID("3");
+        user.setNickName("zz111z11");
 
+        System.out.println(userv.accountUpdate(user));
+    }
     //密码修改测试
     @Test
     public void httpPasswordUpdateTest() throws Exception {
@@ -114,4 +126,19 @@ public class UserDaoTest {
         JSONObject jsonObject = doPost(url, json);
         System.out.println(jsonObject.toString());
     }
+
+    //登陆
+    /*
+    @Test
+    public void httpLogTest() throws Exception {
+        String url = "http://localhost:8080/minimarket/user/passwordUpdate";
+        JSONObject json = new JSONObject();
+        json.put("ID", "1");
+        json.put("Password", "123");
+
+        //post 请求
+        JSONObject jsonObject = doPost(url, json);
+        System.out.println(jsonObject.toString());
+    }
+     */
 }
